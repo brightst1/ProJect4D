@@ -26,7 +26,7 @@ app.use("/api",router)
 router.route("/getUser").get(UserController.getUser)
 router.route("/addUser").post(UserController.addUser)
 router.route("/addValue").post(UserController.addValue)
-
+router.route("/userLogin").post(UserController.userLogin)
 app.get('/', function (req, res) {
   res.send('Hello World!')
 })
