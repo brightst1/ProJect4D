@@ -27,9 +27,11 @@ router.route("/getUser").get(UserController.getUser)
 router.route("/addUser").post(UserController.addUser)
 router.route("/addValue").post(UserController.addValue)
 router.route("/userLogin").post(UserController.userLogin)
+router.route("/registerUser").post(UserController.registerUser)
+
 app.get('/', function (req, res) {
   res.send('Hello World!')
-})
+});
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
