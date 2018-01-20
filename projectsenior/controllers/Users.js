@@ -1,3 +1,5 @@
+// import { exists } from "fs";
+
 var mongoose = require("mongoose")
 var users = require("../models/user.js")
 var express = require('express')
@@ -5,6 +7,7 @@ var bodyParser = require('body-parser')
 var sha512 = require('sha512')
 var regExp_name = /[-!$%^&*()_+|~=`{}\[\]:";'<>?,.\/]+/i //name and lastName
 var regExp_email = /[a-z]([a-z]|.|_|[0-9])*@[a-z]+(.[a-z]+)+/gi
+var jwt = require('jsonwebtoken')
 
 var checkExp = function( str, exp ){
     var str_checked = str.match(exp)
@@ -82,13 +85,67 @@ exports.addValue = function(req,res){
 }
 
 exports.userLogin = function(req,res){
-    if(req && req.body.Username && req.body.password){
+    if(req.body && req.body.Username && req.body.password){
         users.findOne({'Username':req.body.Username},function(err,existUser){
-            
+            if(err){
+                console.log(err)
+                return res.send({err:'เกิดข้อผิดพลาดบางอย่าง'})
+            }else if(!existUser){
+                return res.send({err:'ไม่มีชื่อผู้ใช้'})
+            }else{
+                if ((existUser.Username === req.body.Username) && (existUser.password = sha512(req.body.password))){
+                    existUser.token = jwt.sign({password:existUser.password},'project4D')
+                    existUser.save(function(err){
+                        if(err){
+                            console.log(err)
+                            return res.send({err:'error when saving'})
+                        }
+                    })
+                    return res.send(existUser.token)
+                }else{
+                    return res.send({err:'รหัสผิดพลาด'})
+                }
+            }
         })
+    }else{
+        return res.send({err:'กรุณากรอกข้มูล'})
     }
 }
 
+exports.userLogout = function(req,res){
+    if(req.body && req.body.Username && req.body.password && req.body.token){
+        users.findOne({'Username':req.body.Username},function(err,result){
+            if(err){
+                console.log(err)
+                return res.send({err:'เกิดข้อผิดพลาด'})
+            }else if(!result){
+                return res.send({err:'err'})
+            }else{
+                if(req.body.token === result.token){
+                    result.token = ""
+                    result.save(function(err){
+                        if(err){
+                            console.log(err)
+                            return res.send({err:'something error'})
+                        }
+                    })
+                    return res.send({status:'Logged Out'})
+                }else{
+                    return res.send({status:'token does not match.'})
+                }
+            }
+        })
+    }else{
+        return res.send({err:'กรุณากรอกข้อมูล'})
+    }
+}
+
+exports.testjwt = function(req,res){
+    if(req.body && req.body.Username && req.body.password){
+        return res.send({token: jwt.sign({Username: req.body.Username},'project4D')})
+        
+    }
+}
 // exports.userEdit = function(req,res){
 //     if(req.body.Username && req.body){
 
@@ -118,6 +175,7 @@ exports.registerUser = function(req,res){
                         console.log(er)
                         return res.send(er)
                     }else if(existEmail){
+                        console.log(existEmail.email)
                         return res.send({err:'มีผู้ใช้ E-mail นี้แล้ว'})
                     }else{
                         users.findOne({'citizenId':req.body.citizenId},function(errr,existCitizenId){

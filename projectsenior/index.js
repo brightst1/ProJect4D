@@ -28,6 +28,8 @@ router.route("/addUser").post(UserController.addUser)
 router.route("/addValue").post(UserController.addValue)
 router.route("/userLogin").post(UserController.userLogin)
 router.route("/registerUser").post(UserController.registerUser)
+router.route("/testjwt").post(UserController.testjwt)
+router.route("/userLogout").post(UserController.userLogout)
 
 app.get('/', function (req, res) {
   res.send('Hello World!')
