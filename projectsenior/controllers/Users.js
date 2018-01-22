@@ -93,7 +93,7 @@ exports.userLogin = function(req,res){
             }else if(!existUser){
                 return res.send({err:'ไม่มีชื่อผู้ใช้'})
             }else{
-                if ((existUser.Username === req.body.Username) && (existUser.password = sha512(req.body.password))){
+                if ((existUser.Username === req.body.Username) && (existUser.password === sha512(req.body.password))){
                     existUser.token = jwt.sign({password:existUser.password},'project4D')
                     existUser.save(function(err){
                         if(err){

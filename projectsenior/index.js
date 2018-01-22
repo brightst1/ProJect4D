@@ -1,6 +1,7 @@
 var express = require('express')
 var mongoose = require("mongoose")
 var UserController = require("./controllers/Users")
+var ProviderController = require("./controllers/providers.js")
 var app = express()
 var router = express.Router()
 var bodyParser = require('body-parser')
