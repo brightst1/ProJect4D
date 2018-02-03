@@ -8,7 +8,6 @@ var provider = mongoose.Schema({
     password  : String,
     citizenId : String,
     token     : {type: String, default:""},
-    service   : String,
     detail    : String
 })
 

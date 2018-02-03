@@ -16,6 +16,21 @@ var checkID = function(id)
   return false; return true;
 }
 
+// exports.addService = function(req,res){
+//     if(req.body && req.body.token){
+//         providers.findOne({'token':req.body.token},function(err,result){
+//             if(err){
+//                 console.log(err)
+//                 return res.send({err:'เกิดข้อผิดพลาด'})
+//             }else if(!token){
+//                 return res.send({err:'ท่านไม่มี token กรุณา login'})
+//             }else{
+                
+//             }
+//         })
+//     }
+
+// }
 
 exports.registerProvider = function(req,res){
     if(req && req.body && req.body.Username && req.body.password && req.body.citizenId){
@@ -25,7 +40,7 @@ exports.registerProvider = function(req,res){
         if(!req.body.email){
             return res.send({err:'กรุณาใส่ E-mail'})
         }
-        if(!req.body.citizenId && checkID(req.body.citizenId)){
+        if(!req.body.citizenId){
             return res.send({err:'กรุณาใส่เลขรหัสบัตรประชาชน'})
         }
         providers.findOne({'Username':req.body.Username},function(err,existProvider){
@@ -94,7 +109,7 @@ exports.providerLogin = function(req,res){
                             return res.send({err:'error when saving'})
                         }
                     })
-                    return res.send(existProvider.token)
+                    return res.send({token:existProvider.token})
                 }else{
                     return res.send({err:'รหัสผิดพลาด'})
                 }

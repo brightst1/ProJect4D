@@ -80,7 +80,7 @@ exports.addValue = function(req,res){
         // user.password = req.body.password;
         console.log(user);
     }else{
-        return res.send("has no data")
+        return res.send("ไม่ข้อมูลกรุณากรอกข้อมูล")
     }
 }
 
@@ -93,7 +93,7 @@ exports.userLogin = function(req,res){
             }else if(!existUser){
                 return res.send({err:'ไม่มีชื่อผู้ใช้'})
             }else{
-                if ((existUser.Username === req.body.Username) && (existUser.password === sha512(req.body.password))){
+                if ((existUser.Username === req.body.Username) && existUser.password == sha512(req.body.password) ){
                     existUser.token = jwt.sign({password:existUser.password},'project4D')
                     existUser.save(function(err){
                         if(err){
@@ -101,7 +101,10 @@ exports.userLogin = function(req,res){
                             return res.send({err:'error when saving'})
                         }
                     })
-                    return res.send(existUser.token)
+                    // console.log(req.body);
+                    // var token = {}
+                    // token = existUser.token
+                    return res.send({token:existUser.token})
                 }else{
                     return res.send({err:'รหัสผิดพลาด'})
                 }
@@ -193,6 +196,7 @@ exports.registerUser = function(req,res){
                                 user.email     = req.body.email
                                 user.password  = sha512(req.body.password)
                                 user.citizenId = req.body.citizenId
+                                user.number    = req.body.number
                                 user.save(function(errrr){
                                     if(errrr){
                                         console.log(errrr)
@@ -208,6 +212,6 @@ exports.registerUser = function(req,res){
             }
         })
     }else{
-        return res.send({err:'กรุณาใส่ข้อมูล'});
+        return res.send({err:'กรุณากรอกข้อมูล'});
     }
 }

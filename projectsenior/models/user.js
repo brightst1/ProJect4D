@@ -7,7 +7,8 @@ var user = mongoose.Schema({
     email     : String,
     password  : String,
     citizenId : String,
-    token     : {type: String, default:""}
+    token     : {type: String, default:""},
+    number    : String
 })
 
 module.exports = mongoose.model("user",user)
