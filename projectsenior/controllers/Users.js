@@ -99,19 +99,20 @@ exports.userLogin = function(req,res){
                         if(err){
                             console.log(err)
                             return res.send({err:'error when saving'})
+                        }else{
+                            return res.send({token:existUser.token})
                         }
                     })
                     // console.log(req.body);
                     // var token = {}
                     // token = existUser.token
-                    return res.send({token:existUser.token})
                 }else{
-                    return res.send({err:'รหัสผิดพลาด'})
+                    return res.send({status:"wrong password"})
                 }
             }
         })
     }else{
-        return res.send({err:'กรุณากรอกข้มูล'})
+        return res.send({err:'กรุณากรอกข้อมูล'})
     }
 }
 
@@ -130,9 +131,10 @@ exports.userLogout = function(req,res){
                         if(err){
                             console.log(err)
                             return res.send({err:'something error'})
+                        }else{
+                            return res.send({status:'Logged Out'})
                         }
                     })
-                    return res.send({status:'Logged Out'})
                 }else{
                     return res.send({status:'token does not match.'})
                 }
@@ -201,10 +203,12 @@ exports.registerUser = function(req,res){
                                     if(errrr){
                                         console.log(errrr)
                                         return res.send(errrr)
+                                    }else{
+                                        console.log("saved")
+                                        return res.send({status:'saved'})
                                     }
                                 })
-                                console.log("saved")
-                                return res.send({status:'saved'})
+                                
                             }
                         })
                     }
@@ -213,5 +217,21 @@ exports.registerUser = function(req,res){
         })
     }else{
         return res.send({err:'กรุณากรอกข้อมูล'});
+    }
+}
+
+exports.Tokentest = function(req,res){
+    if(req.body && req.body.token && req.body.Username){
+        users.findOne({'Username':req.body.Username,'token':req.body.token},function(err,result){
+            if(err){
+                console.log(err)
+                return res.send({err:'error'})
+            }else if(!result){
+                return res.send({status:'No user'})
+            }else{
+                console.log("get token")
+                return res.send({status:"กูได้Tokenแล้วไอสัส"})
+            }
+        })
     }
 }

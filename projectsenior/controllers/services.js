@@ -24,6 +24,7 @@ exports.add = function(req,res){
                     }else if(Service){
                         return res.send({status:'มีคนใช้ชื่อบริการนี้แล้ว'})
                     }else{
+                        //add _id ด้วย(ยังไม่ได้แอด)
                         var newService = new services(req.body)
                         newService.save(function(err){
                             if(err){

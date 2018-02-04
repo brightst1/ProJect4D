@@ -31,6 +31,7 @@ router.route("/userLogin").post(UserController.userLogin)
 router.route("/registerUser").post(UserController.registerUser)
 router.route("/testjwt").post(UserController.testjwt)
 router.route("/userLogout").post(UserController.userLogout)
+router.route("/Tokentest").post(UserController.Tokentest)
 
 app.get('/', function (req, res) {
   res.send('Hello World!')
