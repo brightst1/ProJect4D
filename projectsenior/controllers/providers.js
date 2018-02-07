@@ -75,6 +75,7 @@ exports.registerProvider = function(req,res){
                                 provider.email     = req.body.email
                                 provider.password  = sha512(req.body.password)
                                 provider.citizenId = req.body.citizenId
+                                provider.telno     = req.body.telno
                                 provider.save(function(errrr){
                                     if(errrr){
                                         console.log(errrr)
@@ -103,7 +104,7 @@ exports.providerLogin = function(req,res){
             }else if(!existProvider){
                 return res.send({err:'ไม่มีชื่อผู้ใช้'})
             }else{
-                if ((existProvider.Username === req.body.Username) && (existProvider.password === sha512(req.body.password))){
+                if ((existProvider.Username === req.body.Username) && (existProvider.password == sha512(req.body.password))){
                     existProvider.token = jwt.sign({password:existProvider.password},'project4D')
                     existProvider.save(function(err){
                         if(err){
@@ -147,6 +148,35 @@ exports.providerLogout = function(req,res){
         })
     }else{
         return res.send({err:'ข้อมมูลไม่ครบถ้วน'})
+    }
+}
+
+exports.edit = function(req,res){
+    if(req.body && req.body.Username && req.body.token){
+        providers.findOne({'Username':req.body.Username},function(err,result){
+            if(err){
+                console.log(err)
+                return res.send({err:'เกิดปัญหาบางอย่าง'})
+            }else if(!result){
+                return res.send({status:"ไม่พบผู้ใช้"})
+            }else{
+                for(var keys in req.body){
+                    if(keys !== "_id"){
+                        result[keys] = req.body[keys]
+                    }
+                    result.save(function(err){
+                        if(err){
+                            console.log(err)
+                            return res.send({err:"ไม่สามารถบันทึกข้อมูลได้"})
+                        }else{
+                            return res.send({status:"บันทึกข้อมูลสำเร็จ"})
+                        }
+                    })
+                }
+            }
+        })
+    }else{
+        return res.send({status:"กรุณากรอกข้อมูล"})
     }
 }
 

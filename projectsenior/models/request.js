@@ -1,12 +1,16 @@
 var mongoose = require("mongoose")
-var ObjectId = mongoose.Types.ObjectId;
+require('mongoose-double')(mongoose)
+var Schema = mongoose.Schema
+var ObjectId = mongoose.Types.ObjectId
 
 var request = mongoose.Schema({
-    Username : String,
-    Providername : String,
+    Username : {type: Schema.Types.ObjectId, ref:'user'},
+    Providername : {type: Schema.Types.ObjectId, ref:'provider'},
     Service_id : {type : Schema.Types.ObjectId , ref : 'service'},
-    location : { lat : Number, long:Number }
-
+    latitude : {type: Schema.Types.Double,default:0.01},
+    longitude : {type: Schema.Types.Double,default:0.01},
+    Time : Date,
+    statusFlag : Number //1,2,3,4,5
 })
 
 module.exports = mongoose.model("request",request)

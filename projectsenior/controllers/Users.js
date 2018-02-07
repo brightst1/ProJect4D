@@ -199,7 +199,7 @@ exports.registerUser = function(req,res){
                                 user.email     = req.body.email
                                 user.password  = sha512(req.body.password)
                                 user.citizenId = req.body.citizenId
-                                user.number    = req.body.number
+                                user.telno    = req.body.telno
                                 user.save(function(errrr){
                                     if(errrr){
                                         console.log(errrr)
