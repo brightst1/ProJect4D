@@ -7,6 +7,7 @@ var sha512 = require('sha512')
 var regExp_name = /[-!$%^&*()_+|~=`{}\[\]:";'<>?,.\/]+/i //name and lastName
 var regExp_email = /[a-z]([a-z]|.|_|[0-9])*@[a-z]+(.[a-z]+)+/gi
 var jwt = require('jsonwebtoken')
+var ObjectId = mongoose.Types.ObjectId
 
 exports.add = function(req,res){
     if(req.body && req.body.token && req.body.Username && req.body.name){
@@ -26,6 +27,7 @@ exports.add = function(req,res){
                     }else{
                         //add _id ด้วย(ยังไม่ได้แอด)
                         var newService = new services(req.body)
+                        newService.owner = result._id
                         newService.save(function(err){
                             if(err){
                                 console.log(err)
@@ -133,3 +135,4 @@ exports.showList = function(req,res){
         return res.send("ไม่มีข้อมูลกรุณากรอกข้อมูล")
     }
 }
+

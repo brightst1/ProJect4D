@@ -2,6 +2,7 @@ var express = require('express')
 var mongoose = require("mongoose")
 var UserController = require("./controllers/Users")
 var ProviderController = require("./controllers/providers.js")
+var SetviceController = require("./controllers/services.js")
 var app = express()
 var router = express.Router()
 var bodyParser = require('body-parser')
@@ -32,11 +33,19 @@ router.route("/registerUser").post(UserController.registerUser)
 router.route("/testjwt").post(UserController.testjwt)
 router.route("/userLogout").post(UserController.userLogout)
 router.route("/Tokentest").post(UserController.Tokentest)
+router.route("/senddata").post(UserController.sendData)
+router.route("/registerProvider").post(ProviderController.registerProvider)
+router.route("/loginProvider").post(ProviderController.providerLogin)
+router.route("/logoutProvider").post(ProviderController.providerLogout)
+router.route("/showProviderService").post(ProviderController.show)
+router.route("/showListProviceService").post(ProviderController.showList)
+router.route("").post()
+
 
 app.get('/', function (req, res) {
   res.send('Hello World!')
 });
 
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!')
+app.listen(80, function () {
+  console.log('Example app listening on port 80!')
 })

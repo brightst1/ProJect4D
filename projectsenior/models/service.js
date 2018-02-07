@@ -1,4 +1,7 @@
 var mongoose = require("mongoose")
+require('mongoose-double')(mongoose)
+var Schema = mongoose.Schema
+var ObjectId = mongoose.Types.ObjectId
 
 
 var service = mongoose.Schema({
@@ -6,10 +9,10 @@ var service = mongoose.Schema({
     detail  : String,
     price   : String,
     statusFlag : { type : Number , default : 0}, //0 wait , 1 going , 2 done
-    owner   : {type: Schema.type.ObjectId, ref:'provider'},
-    lat : {type:SchemaTypes.Double,default:0},
-    long : {type:SchemaTypes.Double,default:0},
-    typeService : Number
+    owner   : {type: Schema.Types.ObjectId, ref:'provider'},
+    latitude : {type: Schema.Types.Double,default:0},
+    longitude : {type: Schema.Types.Double,default:0},
+    typeService : Number //1,2,3,4
 })
 
 module.exports = mongoose.model("service",service)

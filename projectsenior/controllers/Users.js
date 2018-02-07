@@ -8,6 +8,7 @@ var sha512 = require('sha512')
 var regExp_name = /[-!$%^&*()_+|~=`{}\[\]:";'<>?,.\/]+/i //name and lastName
 var regExp_email = /[a-z]([a-z]|.|_|[0-9])*@[a-z]+(.[a-z]+)+/gi
 var jwt = require('jsonwebtoken')
+var ObjectId = mongoose.Types.ObjectId;
 
 var checkExp = function( str, exp ){
     var str_checked = str.match(exp)
@@ -227,10 +228,25 @@ exports.Tokentest = function(req,res){
                 console.log(err)
                 return res.send({err:'error'})
             }else if(!result){
-                return res.send({status:'No user'})
+                return res.send({status:"data doesn't match"})
             }else{
                 console.log("get token")
                 return res.send({status:"กูได้Tokenแล้วไอสัส"})
+            }
+        })
+    }
+}
+
+exports.sendData = function(req,res){
+    if(req.body.Username){
+        users.findOne({'Username':req.body.Username},function(err,user){
+            if(err){
+                console.log(err)
+                return res.send(err)
+            }else if(!user){
+                return res.send({status:"ไม่มี user "})
+            }else{
+                return res.send(user)
             }
         })
     }
