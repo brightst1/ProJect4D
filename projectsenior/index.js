@@ -28,18 +28,26 @@ app.use("/api",router)
 router.route("/getUser").get(UserController.getUser)
 router.route("/addUser").post(UserController.addUser)
 router.route("/addValue").post(UserController.addValue)
+//------------------------User-------------------------------
 router.route("/userLogin").post(UserController.userLogin)
 router.route("/registerUser").post(UserController.registerUser)
 router.route("/testjwt").post(UserController.testjwt)
 router.route("/userLogout").post(UserController.userLogout)
 router.route("/Tokentest").post(UserController.Tokentest)
 router.route("/senddata").post(UserController.sendData)
+//-------------------------Provider-----------------------------
 router.route("/registerProvider").post(ProviderController.registerProvider)
 router.route("/loginProvider").post(ProviderController.providerLogin)
 router.route("/logoutProvider").post(ProviderController.providerLogout)
-router.route("/showProviderService").post(ProviderController.show)
-router.route("/showListProviceService").post(ProviderController.showList)
+router.route("/showProvider").post(ProviderController.show)
+//------------------------Service-------------------------------
+router.route("/showProviderService").post(ServiceController.show)
+router.route("/showListProviceService").post(ServiceController.showList)
 router.route("/addService").post(ServiceController.add)
+router.route("/showService").post(ServiceController.show)
+router.route("/showListService").post(ServiceController.showList)
+//--------------------------Request--------------------------------
+
 
 
 app.get('/', function (req, res) {

@@ -189,53 +189,17 @@ exports.show = function(req,res){
             }else if(!result){
                 return res.send({status:"ไม่มีชื่อผู้ใช้"})
             }else{
-                if(result.token === req.body.token){
-                    services.findOne({'owner':ObjectId(result._id)},function({err,service}){
-                        if(err){
-                            console.log(err)
-                            return res.send({err:"เกิดข้อผิดพลาด"})
-                        }else if(!service){
-                            return res.send({status:"ผู้ใช้ยังไม่มีบริการใดๆ"})
-                        }else{
-                            return res.send(service)
-                        }
-                    })
-                }else{
-                    return res.send({status:"token ไม่ตรงกันกรุณาเข้าสู่ระบบอีกครั้ง"})
-                }
+                var owner = {}
+                owner.name = result.name
+                owner.lastname = result.lastname
+                owner.citizenId = result.citizenId
+                owner.email = result.email
+                owner.job = result.job
+                owner.telno = result.telno
+                res.send(owner)
             }
         })
     }else{
         return res.send({stauts:"กรุณากรอกข้อมูล"})
-    }
-}
-
-exports.showList = function(req,res){
-    if(req.body && req.body.Username && req.body.token){
-        providers.findOne({'Username':req.body.Username},function(err,result){
-            if(err){
-                console.log(err)
-                return res.send({err:"เกิดข้อผิดพลาด"})
-            }else if(!result){
-                return res.send({status:"ไม่มีชื่อผู้ใช้"})
-            }else{
-                if(result.token === req.body.token){
-                    services.find({'owner':ObjectId(result._id)},function(err,service){
-                        if(err){
-                            console.log(err)
-                            return res.send({err:"เกิดข้อผิดพลาด"})
-                        }else if(!service){
-                            return res.send({status:"ผู้ใช้ยังไม่มีบริการใดๆ"})
-                        }else{
-                            return res.send(service)
-                        }
-                    })
-                }else{
-                    return res.send({status:"token ไม่ตรงกันกรุณาเข้าสู่ระบบอีกครั้ง"})
-                }
-            }
-        })
-    }else{
-        return res.send({status:"กรุณากรอกข้อมูล"})
     }
 }
