@@ -12,7 +12,9 @@ var service = mongoose.Schema({
     owner   : {type: Schema.Types.ObjectId, ref:'provider'},
     latitude : {type: Schema.Types.Double,default:0.01},
     longitude : {type: Schema.Types.Double,default:0.01},
-    typeService : Number //1,2,3,4
+    typeService : Number, //1,2,3,4
+    rating : {type: Schema.Types.Double,default:0.00},
+    rateTime : Number
 })
 
 module.exports = mongoose.model("service",service)

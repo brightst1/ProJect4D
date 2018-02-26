@@ -3,6 +3,7 @@ var mongoose = require("mongoose")
 var UserController = require("./controllers/Users")
 var ProviderController = require("./controllers/providers.js")
 var ServiceController = require("./controllers/services.js")
+var RequestController = require("./controllers/requests.js")
 var app = express()
 var router = express.Router()
 var bodyParser = require('body-parser')
@@ -46,8 +47,12 @@ router.route("/showListProviceService").post(ServiceController.showList)
 router.route("/addService").post(ServiceController.add)
 router.route("/showService").post(ServiceController.show)
 router.route("/showListService").post(ServiceController.showList)
+router.route("/providerChangeStatus").post(ServiceController.providerChangeStatus)
+router.route("/userRating").post(ServiceController.userRating)
 //--------------------------Request--------------------------------
-
+router.route("/userConfirmService").post(RequestController.userConfirmService)
+router.route("/userShowService").post(RequestController.userShowService)
+router.route("/providerShowService").post(RequestController.providerShowService)
 
 
 app.get('/', function (req, res) {

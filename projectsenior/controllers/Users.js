@@ -1,5 +1,3 @@
-// import { exists } from "fs";
-
 var mongoose = require("mongoose")
 var users = require("../models/user.js")
 var express = require('express')
@@ -118,7 +116,7 @@ exports.userLogin = function(req,res){
 }
 
 exports.userLogout = function(req,res){
-    if(req.body && req.body.Username && req.body.password && req.body.token){
+    if(req.body && req.body.Username && req.body.token){
         users.findOne({'Username':req.body.Username},function(err,result){
             if(err){
                 console.log(err)

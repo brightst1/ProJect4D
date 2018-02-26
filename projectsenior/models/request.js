@@ -10,7 +10,7 @@ var request = mongoose.Schema({
     latitude : {type: Schema.Types.Double,default:0.01},
     longitude : {type: Schema.Types.Double,default:0.01},
     Time : Date,
-    statusFlag : Number //1,2,3,4,5
+    statusFlag : Number, //1,2,3,4,5
 })
 
 module.exports = mongoose.model("request",request)

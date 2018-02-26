@@ -1,6 +1,7 @@
 var mongoose = require("mongoose")
 var services = require("../models/service.js")
 var providers = require("../models/provider.js")
+var users = require("../models/user.js")
 var express = require('express')
 var bodyParser = require('body-parser')
 var sha512 = require('sha512')
@@ -135,3 +136,114 @@ exports.showList = function(req,res){
     }
 }
 
+exports.userShowService = function(req,res){
+    if(req.body && req.body.typeService && req.body.token && req.body.Username){
+        users.findOne({'Username':req.body.Username},function(err,user){
+            if(err){
+                console.log(err)
+                return res.send({err:'เกิดข้อผิดพลาด'})
+            }else if(!user){
+                return res.send({status:'ไม่มีชื่อผู้ใช้นี้'})
+            }else{
+                if(user.token == req.body.token){
+                    services.find({'typeService':req.body.typeService},function(err,service){
+                        if(err){
+                            console.log(err)
+                            return res.send({err:'เกิดข้อผิดพลาด'})
+                        }else if(!service){
+                            return res.send({status:'ยังไม่มีบริการในกลุ่มนี้'})
+                        }else{
+                            return res.send(service)
+                        }
+                    })
+                }else{
+                    return res.send({status:'กรุณาเข้าสู้ระบบ'})
+                }
+            }
+        })
+    }else{
+        return res.send({status:'กรุณากรอกข้อมูล'})
+    }
+}
+
+exports.providerChangeStatus = function(req,res){
+    if(req.body && req.body.providername && req.body.token && req.body.status){
+        services.findOne({'Username':req.body.providername},function(err,service){
+            if(err){
+                console.log(err)
+                return res.send({err:'เกิดข้อผิดพลาด'})
+            }else if(!service){
+                return res.send({status:'ไม่ชื่อผู้ใช้นี้'})
+            }else{
+                service.status = req.body.status
+                service.save(function(err){
+                    if(err){
+                        console.log(err)
+                        return res.send({err:'เกิดข้อผิดพลาด'})
+                    }else{
+                        console.log('Change status')
+                        return res.send({status:'save'})
+                    }
+                })
+            }
+        })
+    }else{
+        return res.send({status:'กรุณากรอกข้อมูล'})
+    }
+}
+
+exports.userRating = function(req,res){
+    if(req.body && req.body.Username && req.body.token && req.body.serviceName && req.body.point){
+        users.findOne({'Username':req.body.Username},function(err,user){
+            if(err){
+                console.log(err)
+                return res.send({err:'เกิดข้อผิดพลาด'})
+            }else if(!user){
+                return res.send({status:'ไม่มีชื่อผู้ใช้นี้'})
+            }else{
+                if(user.token == req.body.token){
+                    services.findOne({'name':req.body.serviceName},function(err,service){
+                        if(err){
+                            console.log(err)
+                            return res.send({err:'เกิดข้อผิดพลาด'})
+                        }else if(!service){
+                            return res.send({status:'ไม่มีชื่อผู้ใช้นี้'})
+                        }else{
+                            var temp = service.rating
+                            temp += req.body.point
+                            if(service.rateTime == 0){
+                                service.rating = req.body.point
+                                service.save(function(err){
+                                    if(err){
+                                        console.log(err)
+                                        return res.send({err:'ไม่สามารถบันทึกได้'})
+                                    }else{
+                                        console.log("saved")
+                                        service.rateTime += 1
+                                        return res.send({status:'add rating complete'})
+                                    }
+                                })
+                            }else{
+                                service.rating = temp/service.rateTime
+                                service.save(function(err){
+                                    if(err){
+                                        console.log(err)
+                                        return res.send({err:'ไม่สามารถบันทึกได้'})
+                                    }else{
+                                        console.log("saved")
+                                        service.rateTime += 1
+                                        return res.send({status:'add rating complete'})
+                                    }
+                                })
+                            }
+                        }
+                    })
+                }else{
+                    return res.send({status:'กรุณาเข้าสู่ระบบ'})
+                }
+            }
+        })
+    }else{
+        return res.send({status:'กรุณากรอกข้อมูล'})
+    }
+}
