@@ -29,7 +29,7 @@ var ObjectId = mongoose.Types.ObjectId
 }*/
 //----------User เลือก Service จาก Provider ที่เปิดบริการรอเอาไว้--------------------
 exports.userConfirmService = function(req,res){
-    if(req.body && req.body.token && req.body.Username && req.body.providername && req.body.typeService){
+    if(req.body && req.body.token && req.body.Username && req.body.providername && req.body.nameService){
         users.findOne({'Username':req.body.Username},function(err,user){
             if(err){
                 console.log(err)

@@ -1,5 +1,6 @@
 var mongoose = require("mongoose")
 var users = require("../models/user.js")
+var offers = require("../models/offer.js")
 var express = require('express')
 var bodyParser = require('body-parser')
 var sha512 = require('sha512')
@@ -94,11 +95,13 @@ exports.userLogin = function(req,res){
             }else{
                 if ((existUser.Username === req.body.Username) && existUser.password == sha512(req.body.password) ){
                     existUser.token = jwt.sign({password:existUser.password},'project4D')
+                    console.log("User :"+existUser.Username+" logged in")
                     existUser.save(function(err){
                         if(err){
                             console.log(err)
                             return res.send({err:'error when saving'})
                         }else{
+                            
                             return res.send({token:existUser.token})
                         }
                     })
@@ -248,4 +251,38 @@ exports.sendData = function(req,res){
             }
         })
     }
+}
+
+exports.UserOfferRequest = function(req,res){
+    if(req.body && req.body.token && req.body.Username){
+        users.findOne({'Username':req.body.Username},function(err,user){
+            if(err){
+                console.log(err)
+                return res.send({err:err})
+            }else if(!user){
+                return res.send({status:'ไม่มีชื่อผู้ใช้นี้'})
+            }else{
+                if(user.token == req.body.token && req.body.typeservice && req.body.detailservice){
+                    var newOffer = new offers()
+                    newOffer.typeservice = req.body.typeservice
+                    newOffer.detail = req.body.detailservice
+                    newOffer.status = 1
+                    newOffer.Username = req.body.Username
+                    newOffer.save(function(err){
+                        if(err){
+                            console.log(err)
+                            return res.send({err:'เกิดข้อผิดพลาด'})
+                        }else{
+                            console.log({status:'Saved Offer'})
+                        }
+                    })
+                }else{
+                    return res.send({status:'ไม่สามารถทำรายการได้'})
+                }
+            }
+        })
+    }else{
+        return res.send({status:'กรุณาใส่ข้อมูล'})
+    }
+
 }
