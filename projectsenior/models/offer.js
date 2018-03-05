@@ -1,9 +1,21 @@
 var mongoose = require("mongoose")
+require('mongoose-double')(mongoose)
+var Schema = mongoose.Schema
 var ObjectId = mongoose.Types.ObjectId
 
 var offer = mongoose.Schema({
     typeservice : Number,
-    detail : String,
+    detail : {type:Object,default:{}},
+    /*
+        detail : {
+            type_info : "",
+            amount :  Number,
+            moreDetail : "",
+            toolsCheck : "",
+            problem : "",
+            placeType : ""
+        }
+    */
     Username : String,
     status : Number, //1 waiting , 2match
     response_id : {type: Schema.Types.ObjectId, ref:'response'} //ของprovider 

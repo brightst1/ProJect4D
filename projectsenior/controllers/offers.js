@@ -26,7 +26,12 @@ exports.UserOfferRequest = function(req,res){
                 if(user.token == req.body.token && req.body.typeservice && req.body.detailservice){
                     var newOffer = new offers()
                     newOffer.typeservice = req.body.typeservice
-                    newOffer.detail = req.body.detailservice
+                    newOffer.detail.type_info = req.body.type_info
+                    newOffer.detail.amount = req.body.amount
+                    newOffer.detail.moreDetail = req.body.moreDetail
+                    newOffer.detail.toolsCheck = req.body.toolsCheck
+                    newOffer.detail.problem = req.body.problem
+                    newOffer.detail.placeType = req.body.placeType
                     newOffer.status = 1
                     newOffer.Username = req.body.Username
                     newOffer.save(function(err){
