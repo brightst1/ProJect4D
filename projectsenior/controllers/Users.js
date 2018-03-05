@@ -253,36 +253,3 @@ exports.sendData = function(req,res){
     }
 }
 
-exports.UserOfferRequest = function(req,res){
-    if(req.body && req.body.token && req.body.Username){
-        users.findOne({'Username':req.body.Username},function(err,user){
-            if(err){
-                console.log(err)
-                return res.send({err:err})
-            }else if(!user){
-                return res.send({status:'ไม่มีชื่อผู้ใช้นี้'})
-            }else{
-                if(user.token == req.body.token && req.body.typeservice && req.body.detailservice){
-                    var newOffer = new offers()
-                    newOffer.typeservice = req.body.typeservice
-                    newOffer.detail = req.body.detailservice
-                    newOffer.status = 1
-                    newOffer.Username = req.body.Username
-                    newOffer.save(function(err){
-                        if(err){
-                            console.log(err)
-                            return res.send({err:'เกิดข้อผิดพลาด'})
-                        }else{
-                            console.log({status:'Saved Offer'})
-                        }
-                    })
-                }else{
-                    return res.send({status:'ไม่สามารถทำรายการได้'})
-                }
-            }
-        })
-    }else{
-        return res.send({status:'กรุณาใส่ข้อมูล'})
-    }
-
-}

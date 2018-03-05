@@ -204,19 +204,3 @@ exports.show = function(req,res){
     }
 }
 
-exports.providerCheckOffer = function(req,res){
-    if(req.body && req.body.token && req.body.providername && req.body.typeservice){
-        offers.findOne({'typeservice':req.body.typeservice},function(err,offer){
-            if(err){
-                console.log(err)
-                return res.send({err:'เกิดข้อผิดพลาด'})
-            }else if(!offer){
-                return res.send({status:'ยังไม่รายที่ค้นหาในตอนนี้'})
-            }else{
-                return res.send(offer)
-            }
-        })
-    }else{
-        return res.send({status:'ข้อมูลไม่ครบกรุณากรอกข้อมูล'})
-    }
-}
