@@ -62,6 +62,7 @@ exports.providerCheckOffer = function(req,res){
             }else if(!offer){
                 return res.send({status:'ยังไม่รายที่ค้นหาในตอนนี้'})
             }else{
+                //แก้ตรงนี้ !!
                 return res.send(offer)
             }
         })
