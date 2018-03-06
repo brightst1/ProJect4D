@@ -27,7 +27,7 @@ exports.UserOfferRequest = function(req,res){
                     var newOffer = new offers()
                     newOffer.typeservice = req.body.typeservice
                     newOffer.detail.type_info = req.body.type_info
-                    newOffer.detail.amount = req.body.amount
+                    newOffer.amount = req.body.amount
                     newOffer.detail.moreDetail = req.body.moreDetail
                     newOffer.detail.toolsCheck = req.body.toolsCheck
                     newOffer.detail.problem = req.body.problem
@@ -56,15 +56,36 @@ exports.UserOfferRequest = function(req,res){
 
 exports.providerCheckOffer = function(req,res){
     if(req.body && req.body.token && req.body.providername && req.body.typeservice){
-        offers.find({'typeservice':req.body.typeservice},function(err,offer){
+        offers.find({'typeservice':req.body.typeservice,'status':1},function(err,offer){
             if(err){
                 console.log(err)
                 return res.send({err:'เกิดข้อผิดพลาด'})
             }else if(!offer){
                 return res.send({status:'ยังไม่รายที่ค้นหาในตอนนี้'})
             }else{
-                //แก้ตรงนี้ !!
-                return res.send(offer)
+                //return res.send(offer)
+                var offerSend = []
+                offer.forEach(function(data){
+                    var objectSend = {}
+                    for(var y in data){
+                        if(y.toString() !== 'detail'){
+                            //objectSend[y] = data[y]
+                        }else{
+                            for(var x in data.detail){
+                                //objectSend[x] = data[x]
+                                objectSend[x] = data.detail[x]
+                                objectSend._id = data._id
+                                objectSend.Username = data.Username
+                                objectSend.typeservice = data.typeservice
+                                objectSend.status = data.status
+                            }
+                        }
+                    }
+                    console.log(objectSend)
+                    offerSend.push(objectSend)
+                })
+                //console.log(offerSend)
+                return res.send(offerSend)
             }
         })
     }else{
@@ -185,7 +206,7 @@ exports.UserListShowOfferFromProvider = function(req,res){
                         }else if(!offer){
                             return res.send({status:'ยังไม่มีการร้องขอรับบริการในขณะนี้'})
                         }else{
-                            return res.send(offer)
+                            return res.send(data)
                         }
                     })
                 }else{
