@@ -9,7 +9,6 @@ var offer = mongoose.Schema({
     /*
         detail : {
             type_info : "",
-            amount :  Number,
             moreDetail : "",
             toolsCheck : "",
             problem : "",
@@ -17,6 +16,7 @@ var offer = mongoose.Schema({
         }
     */
     Username : String,
+    amount : String,
     status : Number, //1 waiting , 2match
     response_id : {type: Schema.Types.ObjectId, ref:'response'} //ของprovider 
 })

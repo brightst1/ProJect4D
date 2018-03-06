@@ -4,6 +4,7 @@ var UserController = require("./controllers/Users")
 var ProviderController = require("./controllers/providers.js")
 var ServiceController = require("./controllers/services.js")
 var RequestController = require("./controllers/requests.js")
+var OfferController = require("./controllers/offers.js")
 var app = express()
 var router = express.Router()
 var bodyParser = require('body-parser')
@@ -53,6 +54,18 @@ router.route("/userRating").post(ServiceController.userRating)
 router.route("/userConfirmService").post(RequestController.userConfirmService)
 router.route("/userShowService").post(RequestController.userShowService)
 router.route("/providerShowService").post(RequestController.providerShowService)
+//---------------------------Offer-----------------------------------
+router.route("/userOfferRequest").post(OfferController.UserOfferRequest)
+router.route("/providerCheckOffer").post(OfferController.providerCheckOffer)
+router.route("/providerResponseOffer").post(OfferController.providerResponseOffer)
+router.route("/userConfirmOffer").post(OfferController.userConfirmOffer)
+router.route("/UserListShowOfferFromProvider").post(OfferController.UserListShowOfferFromProvider)
+router.route("/UserShowOfferFromProvider").post(OfferController.UserShowOfferFromProvider)
+/*
+router.route("/").post(OfferController)
+router.route("/").post(OfferController)
+router.route("/").post(OfferController)
+*/
 
 
 app.get('/', function (req, res) {
