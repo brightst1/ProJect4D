@@ -23,7 +23,7 @@ exports.UserOfferRequest = function(req,res){
             }else if(!user){
                 return res.send({status:'ไม่มีชื่อผู้ใช้นี้'})
             }else{
-                if(user.token == req.body.token && req.body.typeservice && req.body.detailservice){
+                if(user.token == req.body.token && req.body.typeservice){
                     var newOffer = new offers()
                     newOffer.typeservice = req.body.typeservice
                     newOffer.detail.type_info = req.body.type_info
@@ -40,6 +40,7 @@ exports.UserOfferRequest = function(req,res){
                             return res.send({err:'เกิดข้อผิดพลาด'})
                         }else{
                             console.log({status:'Saved Offer'})
+                            return res.send({status:'ยื่นคำเสนอบริการไปแล้ว'})
                         }
                     })
                 }else{
@@ -55,7 +56,7 @@ exports.UserOfferRequest = function(req,res){
 
 exports.providerCheckOffer = function(req,res){
     if(req.body && req.body.token && req.body.providername && req.body.typeservice){
-        offers.findOne({'typeservice':req.body.typeservice},function(err,offer){
+        offers.find({'typeservice':req.body.typeservice},function(err,offer){
             if(err){
                 console.log(err)
                 return res.send({err:'เกิดข้อผิดพลาด'})

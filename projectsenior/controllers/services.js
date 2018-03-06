@@ -19,26 +19,42 @@ exports.add = function(req,res){
             }else if(!result){
                 return res.send({status:'คุณไม่มีสิทธิ์เข้าถึงกรุณาเข้าสู่ระบบ'})
             }else{
-                services.findOne({'name':req.body.name},function(err,Service){
+                services.findOne({'owner':ObjectId(result._id)},function(err,service){
                     if(err){
                         console.log(err)
                         return res.send({err:'เกิดข้อผิดพลาด'})
-                    }else if(Service){
-                        return res.send({status:'มีคนใช้ชื่อบริการนี้แล้ว'})
-                    }else{
-                        var newService = new services(req.body)
-                        newService.owner = ObjectId(result._id)
-                        newService.save(function(err){
+                    }else if(service){
+                        if(ObjectId(service.owner).toString() === ObjectId(result._id).toString()){
+                            return res.send({status:"ท่านได้สร้างบริการไปแล้วไม่สามารถเพิ่มได้อีก"})
+                        }else{
+                            console.log('missing from search engine')
+                            console.log(service.owner+" AND "+result._id)
+                            return res.send()
+                        }
+                    }else if(!service){
+                        console.log(result._id)
+                        services.findOne({'name':req.body.name},function(err,serv){
                             if(err){
                                 console.log(err)
-                                return res.send({err:'ไม่สามารถบันทึกข้อมูลได้'})
+                                return res.send({err:'เกิดข้อผิดพลาด'})
+                            }else if(!serv){
+                                var newService = new services(req.body)
+                                newService.owner = ObjectId(result._id)
+                                newService.save(function(err){
+                                    if(err){
+                                        console.log(err)
+                                        res.send({err:'ไม่สามารถบันทึกข้อมูลได้'})
+                                    }else{
+                                        console.log('saved')
+                                        res.send({status:'Saved'})
+                                    }
+                                }) 
                             }else{
-                                console.log('saved')
-                                return res.send({status:'Saved'})
+                                return res.send({status:'มีชื่อบริการนี้อยู่แล้ว'})
                             }
                         })
                     }
-                })
+                })                
             }
         })
     }else{
@@ -63,7 +79,7 @@ exports.edit = function(req,res){
                         return res.send({status:'ไม่มีชื่อบริการนี้กรุณากรอกอีกครั้ง'})
                     }else{
                         for(var keys in req.body){
-                            if(keys != "_id"){
+                            if(keys != "_id" && keys != "__v" && keys != "flagService"){
                                 service[keys] = req.body[keys]
                             }
                         }

@@ -35,7 +35,7 @@ var checkID = function(id)
 // }
 
 exports.registerProvider = function(req,res){
-    if(req && req.body && req.body.Username && req.body.password && req.body.citizenId){
+    if(req.body && req.body.Username && req.body.password && req.body.citizenId){
         if(!req.body.name || !req.body.lastname){
             return res.send({err:'กรุณาใส่ชื่อและนามสกุล'})
         }
@@ -112,6 +112,7 @@ exports.providerLogin = function(req,res){
                             return res.send({err:'error when saving'})
                         }
                     })
+                    console.log("Provider : "+existProvider.providername+" Logged In")
                     return res.send({token:existProvider.token})
                 }else{
                     return res.send({err:'รหัสผิดพลาด'})
@@ -161,7 +162,7 @@ exports.edit = function(req,res){
                 return res.send({status:"ไม่พบผู้ใช้"})
             }else{
                 for(var keys in req.body){
-                    if(keys !== "_id"){
+                    if(keys !== "_id" && keys !== "__v"){
                         result[keys] = req.body[keys]
                     }
                     result.save(function(err){
