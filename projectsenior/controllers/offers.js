@@ -132,30 +132,33 @@ exports.providerResponseOffer = function(req,res){
 }
 
 exports.userConfirmOffer = function(req,res){
-    if(req.body && req.body.offerId && req.body.Username && req.body.token){
+    if(req.body && req.body.Username && req.body.token && req.body.offerId && req.body.response_id){
         users.findOne({'Username':req.body.Username},function(err,user){
             if(err){
                 console.log(err)
                 return res.send({err:'เกิดข้อผิดพลาด'})
             }else if(!user){
-                return res.send({status:'ไม่มีชื่อผู้ใช้นี้'})
+                return res.send({status:'ไม่พบชื่อผู้ใช้นี้'})
             }else{
                 if(user.token == req.body.token){
-                    offers.findOne({'_id':ObjectId(req.body.offerId)},function(err,offer){
+                    offers.findOne({"_id":ObjectId(req.body.offerId)},function(err,offer){
                         if(err){
                             console.log(err)
                             return res.send({err:'เกิดข้อผิดพลาด'})
                         }else if(!offer){
-                            return res.send({status:'ยังไม่มีการร้องขอบริการ'})
+                            return res.send({status:'ไม่พบข้อเสนอนี้'})
                         }else{
                             if(offer.response_id){
-                                responses.findOne({'_id':ObjectId(offer.response_id)},function(err,response){
+                                return res.send({status:'คุณได้ทำการเลือกบริการไปแล้วสำหรับคำขอนี้'})
+                            }else{
+                                responses.findOne({'_id':req.body.response_id},function(err,response){
                                     if(err){
                                         console.log(err)
                                         return res.send({err:'เกิดข้อผิดพลาด'})
                                     }else if(!response){
-                                        return res.send({status:'ยังไม่มีผู้ให้บริการเสนอการให้บริการในตอนนี้'})
+                                        return res.send({status:'ไม่พบคำร้องขอบริการ'})
                                     }else{
+                                        offer.response_id = response._id
                                         var newRequest = new requests()
                                         newRequest.Username = user.Username
                                         newRequest.providername = provider.Username
@@ -163,19 +166,26 @@ exports.userConfirmOffer = function(req,res){
                                         newRequest.latitude = service.latitude
                                         newRequest.longitude = service.longitude
                                         newRequest.statusFlag = 1
-                                        newRequest.save(function(err){
-                                            if(err){
-                                                console.log(err)
+                                        newRequest.save(function(er){
+                                            if(er){
+                                                console.log(er)
                                                 return res.send({err:'ไม่สามารถบันทึกข้อมูลได้'})
                                             }else{
                                                 console.log('Save Request')
-                                                return res.send({status:'Save!'})
+                                                offer.save(function(err){
+                                                    if(err){
+                                                        console.log(err)
+                                                        return res.send({err:'เกิดข้อผิดพลาด'})
+                                                    }else{
+                                                        console.log('save')
+                                                        return res.send({status:'save'})
+                                                    }
+                                                })
+                                                
                                             }
                                         })
                                     }
                                 })
-                            }else{
-                                return res.send({status:'ท่านได้เลือกบริการจากผู้ให้บริการท่านอื่นไปแล้ว'})
                             }
                         }
                     })
@@ -185,9 +195,8 @@ exports.userConfirmOffer = function(req,res){
             }
         })
     }else{
-        return res.send({status:'ข้อมูลไม่ครบกรุณากรอกข้อมูล'})
+        return res.send({status:'กรุณากรอกข้อมูล'})
     }
-
 }
 
 exports.UserListShowOfferFromProvider = function(req,res){
