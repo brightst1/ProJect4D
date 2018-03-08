@@ -1,0 +1,307 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install',
+1 verbose cli   'mongoose-schema-extend' ]
+2 info using npm@3.10.10
+3 info using node@v6.11.4
+4 silly loadCurrentTree Starting
+5 silly install loadCurrentTree
+6 silly install readLocalPackageData
+7 silly fetchPackageMetaData mongoose-schema-extend
+8 silly fetchNamedPackageData mongoose-schema-extend
+9 silly mapToRegistry name mongoose-schema-extend
+10 silly mapToRegistry using default registry
+11 silly mapToRegistry registry https://registry.npmjs.org/
+12 silly mapToRegistry data Result {
+12 silly mapToRegistry   raw: 'mongoose-schema-extend',
+12 silly mapToRegistry   scope: null,
+12 silly mapToRegistry   escapedName: 'mongoose-schema-extend',
+12 silly mapToRegistry   name: 'mongoose-schema-extend',
+12 silly mapToRegistry   rawSpec: '',
+12 silly mapToRegistry   spec: 'latest',
+12 silly mapToRegistry   type: 'tag' }
+13 silly mapToRegistry uri https://registry.npmjs.org/mongoose-schema-extend
+14 verbose request uri https://registry.npmjs.org/mongoose-schema-extend
+15 verbose request no auth needed
+16 info attempt registry request try #1 at 8:51:48 PM
+17 verbose request id 5fa82dc80a8242e2
+18 verbose etag "5a0d17f8-4881"
+19 verbose lastModified Thu, 16 Nov 2017 4:45:44 GMT
+20 http request GET https://registry.npmjs.org/mongoose-schema-extend
+21 http 304 https://registry.npmjs.org/mongoose-schema-extend
+22 verbose headers { date: 'Wed, 07 Mar 2018 13:54:49 GMT',
+22 verbose headers   via: '1.1 varnish',
+22 verbose headers   'cache-control': 'max-age=300',
+22 verbose headers   etag: '"5a0d17f8-4881"',
+22 verbose headers   age: '0',
+22 verbose headers   connection: 'keep-alive',
+22 verbose headers   'x-served-by': 'cache-sin18027-SIN',
+22 verbose headers   'x-cache': 'MISS',
+22 verbose headers   'x-cache-hits': '0',
+22 verbose headers   'x-timer': 'S1520430889.257330,VS0,VE234',
+22 verbose headers   vary: 'Accept-Encoding, Accept' }
+23 silly get cb [ 304,
+23 silly get   { date: 'Wed, 07 Mar 2018 13:54:49 GMT',
+23 silly get     via: '1.1 varnish',
+23 silly get     'cache-control': 'max-age=300',
+23 silly get     etag: '"5a0d17f8-4881"',
+23 silly get     age: '0',
+23 silly get     connection: 'keep-alive',
+23 silly get     'x-served-by': 'cache-sin18027-SIN',
+23 silly get     'x-cache': 'MISS',
+23 silly get     'x-cache-hits': '0',
+23 silly get     'x-timer': 'S1520430889.257330,VS0,VE234',
+23 silly get     vary: 'Accept-Encoding, Accept' } ]
+24 verbose etag https://registry.npmjs.org/mongoose-schema-extend from cache
+25 verbose get saving mongoose-schema-extend to C:\Users\Sup Bro!\AppData\Roaming\npm-cache\registry.npmjs.org\mongoose-schema-extend\.cache.json
+26 verbose correctMkdir C:\Users\Sup Bro!\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+27 silly install normalizeTree
+28 silly loadCurrentTree Finishing
+29 silly loadIdealTree Starting
+30 silly install loadIdealTree
+31 silly cloneCurrentTree Starting
+32 silly install cloneCurrentTreeToIdealTree
+33 silly cloneCurrentTree Finishing
+34 silly loadShrinkwrap Starting
+35 silly install loadShrinkwrap
+36 silly loadShrinkwrap Finishing
+37 silly loadAllDepsIntoIdealTree Starting
+38 silly install loadAllDepsIntoIdealTree
+39 silly resolveWithNewModule mongoose-schema-extend@0.2.2 checking installable status
+40 silly cache add args [ 'mongoose-schema-extend', null ]
+41 verbose cache add spec mongoose-schema-extend
+42 silly cache add parsed spec Result {
+42 silly cache add   raw: 'mongoose-schema-extend',
+42 silly cache add   scope: null,
+42 silly cache add   escapedName: 'mongoose-schema-extend',
+42 silly cache add   name: 'mongoose-schema-extend',
+42 silly cache add   rawSpec: '',
+42 silly cache add   spec: 'latest',
+42 silly cache add   type: 'tag' }
+43 silly addNamed mongoose-schema-extend@latest
+44 verbose addNamed "latest" is being treated as a dist-tag for mongoose-schema-extend
+45 info addNameTag [ 'mongoose-schema-extend', 'latest' ]
+46 silly mapToRegistry name mongoose-schema-extend
+47 silly mapToRegistry using default registry
+48 silly mapToRegistry registry https://registry.npmjs.org/
+49 silly mapToRegistry data Result {
+49 silly mapToRegistry   raw: 'mongoose-schema-extend',
+49 silly mapToRegistry   scope: null,
+49 silly mapToRegistry   escapedName: 'mongoose-schema-extend',
+49 silly mapToRegistry   name: 'mongoose-schema-extend',
+49 silly mapToRegistry   rawSpec: '',
+49 silly mapToRegistry   spec: 'latest',
+49 silly mapToRegistry   type: 'tag' }
+50 silly mapToRegistry uri https://registry.npmjs.org/mongoose-schema-extend
+51 verbose addNameTag registry:https://registry.npmjs.org/mongoose-schema-extend not in flight; fetching
+52 verbose get https://registry.npmjs.org/mongoose-schema-extend not expired, no request
+53 silly addNameTag next cb for mongoose-schema-extend with tag latest
+54 silly addNamed mongoose-schema-extend@0.2.2
+55 verbose addNamed "0.2.2" is a plain semver version for mongoose-schema-extend
+56 silly mapToRegistry name mongoose-schema-extend
+57 silly mapToRegistry using default registry
+58 silly mapToRegistry registry https://registry.npmjs.org/
+59 silly mapToRegistry data Result {
+59 silly mapToRegistry   raw: 'mongoose-schema-extend',
+59 silly mapToRegistry   scope: null,
+59 silly mapToRegistry   escapedName: 'mongoose-schema-extend',
+59 silly mapToRegistry   name: 'mongoose-schema-extend',
+59 silly mapToRegistry   rawSpec: '',
+59 silly mapToRegistry   spec: 'latest',
+59 silly mapToRegistry   type: 'tag' }
+60 silly mapToRegistry uri https://registry.npmjs.org/mongoose-schema-extend
+61 verbose addRemoteTarball https://registry.npmjs.org/mongoose-schema-extend/-/mongoose-schema-extend-0.2.2.tgz not in flight; adding
+62 verbose addRemoteTarball [ 'https://registry.npmjs.org/mongoose-schema-extend/-/mongoose-schema-extend-0.2.2.tgz',
+62 verbose addRemoteTarball   'f63dd313c422a3871f5569e36b0d28ca1a224631' ]
+63 info retry fetch attempt 1 at 8:51:48 PM
+64 info attempt registry request try #1 at 8:51:48 PM
+65 http fetch GET https://registry.npmjs.org/mongoose-schema-extend/-/mongoose-schema-extend-0.2.2.tgz
+66 http fetch 200 https://registry.npmjs.org/mongoose-schema-extend/-/mongoose-schema-extend-0.2.2.tgz
+67 silly fetchAndShaCheck shasum f63dd313c422a3871f5569e36b0d28ca1a224631
+68 verbose addTmpTarball C:\Users\SUPBRO~1\AppData\Local\Temp\npm-14580-31665e29\registry.npmjs.org\mongoose-schema-extend\-\mongoose-schema-extend-0.2.2.tgz not in flight; adding
+69 verbose addTmpTarball already have metadata; skipping unpack for mongoose-schema-extend@0.2.2
+70 verbose correctMkdir C:\Users\Sup Bro!\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+71 silly cache afterAdd mongoose-schema-extend@0.2.2
+72 verbose afterAdd C:\Users\Sup Bro!\AppData\Roaming\npm-cache\mongoose-schema-extend\0.2.2\package\package.json not in flight; writing
+73 verbose correctMkdir C:\Users\Sup Bro!\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+74 verbose afterAdd C:\Users\Sup Bro!\AppData\Roaming\npm-cache\mongoose-schema-extend\0.2.2\package\package.json written
+75 silly fetchNamedPackageData harmony-reflect
+76 silly mapToRegistry name harmony-reflect
+77 silly mapToRegistry using default registry
+78 silly mapToRegistry registry https://registry.npmjs.org/
+79 silly mapToRegistry data Result {
+79 silly mapToRegistry   raw: 'harmony-reflect',
+79 silly mapToRegistry   scope: null,
+79 silly mapToRegistry   escapedName: 'harmony-reflect',
+79 silly mapToRegistry   name: 'harmony-reflect',
+79 silly mapToRegistry   rawSpec: '',
+79 silly mapToRegistry   spec: 'latest',
+79 silly mapToRegistry   type: 'tag' }
+80 silly mapToRegistry uri https://registry.npmjs.org/harmony-reflect
+81 silly fetchNamedPackageData owl-deepcopy
+82 silly mapToRegistry name owl-deepcopy
+83 silly mapToRegistry using default registry
+84 silly mapToRegistry registry https://registry.npmjs.org/
+85 silly mapToRegistry data Result {
+85 silly mapToRegistry   raw: 'owl-deepcopy',
+85 silly mapToRegistry   scope: null,
+85 silly mapToRegistry   escapedName: 'owl-deepcopy',
+85 silly mapToRegistry   name: 'owl-deepcopy',
+85 silly mapToRegistry   rawSpec: '',
+85 silly mapToRegistry   spec: 'latest',
+85 silly mapToRegistry   type: 'tag' }
+86 silly mapToRegistry uri https://registry.npmjs.org/owl-deepcopy
+87 verbose request uri https://registry.npmjs.org/harmony-reflect
+88 verbose request no auth needed
+89 info attempt registry request try #1 at 8:51:48 PM
+90 http request GET https://registry.npmjs.org/harmony-reflect
+91 verbose request uri https://registry.npmjs.org/owl-deepcopy
+92 verbose request no auth needed
+93 info attempt registry request try #1 at 8:51:48 PM
+94 http request GET https://registry.npmjs.org/owl-deepcopy
+95 http 200 https://registry.npmjs.org/harmony-reflect
+96 verbose headers { 'content-type': 'application/json; charset=UTF-8',
+96 verbose headers   server: 'UploadServer',
+96 verbose headers   'cache-control': 'max-age=300',
+96 verbose headers   'last-modified': 'Thu, 22 Feb 2018 22:00:09 GMT',
+96 verbose headers   etag: '"5a8f3d69-9fdc"',
+96 verbose headers   'x-npm-region': 'Asia',
+96 verbose headers   'content-encoding': 'gzip',
+96 verbose headers   'content-length': '6967',
+96 verbose headers   'accept-ranges': 'bytes',
+96 verbose headers   date: 'Wed, 07 Mar 2018 13:54:49 GMT',
+96 verbose headers   via: '1.1 varnish',
+96 verbose headers   age: '0',
+96 verbose headers   connection: 'keep-alive',
+96 verbose headers   'x-served-by': 'cache-sin18027-SIN',
+96 verbose headers   'x-cache': 'HIT',
+96 verbose headers   'x-cache-hits': '1',
+96 verbose headers   'x-timer': 'S1520430890.666706,VS0,VE212',
+96 verbose headers   vary: 'Accept-Encoding, Accept' }
+97 silly get cb [ 200,
+97 silly get   { 'content-type': 'application/json; charset=UTF-8',
+97 silly get     server: 'UploadServer',
+97 silly get     'cache-control': 'max-age=300',
+97 silly get     'last-modified': 'Thu, 22 Feb 2018 22:00:09 GMT',
+97 silly get     etag: '"5a8f3d69-9fdc"',
+97 silly get     'x-npm-region': 'Asia',
+97 silly get     'content-encoding': 'gzip',
+97 silly get     'content-length': '6967',
+97 silly get     'accept-ranges': 'bytes',
+97 silly get     date: 'Wed, 07 Mar 2018 13:54:49 GMT',
+97 silly get     via: '1.1 varnish',
+97 silly get     age: '0',
+97 silly get     connection: 'keep-alive',
+97 silly get     'x-served-by': 'cache-sin18027-SIN',
+97 silly get     'x-cache': 'HIT',
+97 silly get     'x-cache-hits': '1',
+97 silly get     'x-timer': 'S1520430890.666706,VS0,VE212',
+97 silly get     vary: 'Accept-Encoding, Accept' } ]
+98 verbose get saving harmony-reflect to C:\Users\Sup Bro!\AppData\Roaming\npm-cache\registry.npmjs.org\harmony-reflect\.cache.json
+99 verbose correctMkdir C:\Users\Sup Bro!\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+100 silly resolveWithNewModule harmony-reflect@1.6.0 checking installable status
+101 silly cache add args [ 'harmony-reflect@^1.4.2', null ]
+102 verbose cache add spec harmony-reflect@^1.4.2
+103 silly cache add parsed spec Result {
+103 silly cache add   raw: 'harmony-reflect@^1.4.2',
+103 silly cache add   scope: null,
+103 silly cache add   escapedName: 'harmony-reflect',
+103 silly cache add   name: 'harmony-reflect',
+103 silly cache add   rawSpec: '^1.4.2',
+103 silly cache add   spec: '>=1.4.2 <2.0.0',
+103 silly cache add   type: 'range' }
+104 silly addNamed harmony-reflect@>=1.4.2 <2.0.0
+105 verbose addNamed ">=1.4.2 <2.0.0" is a valid semver range for harmony-reflect
+106 silly addNameRange { name: 'harmony-reflect',
+106 silly addNameRange   range: '>=1.4.2 <2.0.0',
+106 silly addNameRange   hasData: false }
+107 silly mapToRegistry name harmony-reflect
+108 silly mapToRegistry using default registry
+109 silly mapToRegistry registry https://registry.npmjs.org/
+110 silly mapToRegistry data Result {
+110 silly mapToRegistry   raw: 'harmony-reflect',
+110 silly mapToRegistry   scope: null,
+110 silly mapToRegistry   escapedName: 'harmony-reflect',
+110 silly mapToRegistry   name: 'harmony-reflect',
+110 silly mapToRegistry   rawSpec: '',
+110 silly mapToRegistry   spec: 'latest',
+110 silly mapToRegistry   type: 'tag' }
+111 silly mapToRegistry uri https://registry.npmjs.org/harmony-reflect
+112 verbose addNameRange registry:https://registry.npmjs.org/harmony-reflect not in flight; fetching
+113 verbose get https://registry.npmjs.org/harmony-reflect not expired, no request
+114 silly addNameRange number 2 { name: 'harmony-reflect',
+114 silly addNameRange   range: '>=1.4.2 <2.0.0',
+114 silly addNameRange   hasData: true }
+115 silly addNameRange versions [ 'harmony-reflect',
+115 silly addNameRange   [ '0.0.1',
+115 silly addNameRange     '0.0.2',
+115 silly addNameRange     '0.0.3',
+115 silly addNameRange     '0.0.4',
+115 silly addNameRange     '0.0.5',
+115 silly addNameRange     '0.0.6',
+115 silly addNameRange     '0.0.7',
+115 silly addNameRange     '0.0.8',
+115 silly addNameRange     '0.0.9',
+115 silly addNameRange     '0.0.10',
+115 silly addNameRange     '0.0.11',
+115 silly addNameRange     '0.0.12',
+115 silly addNameRange     '0.0.13',
+115 silly addNameRange     '1.0.0',
+115 silly addNameRange     '1.0.1',
+115 silly addNameRange     '1.1.0',
+115 silly addNameRange     '1.1.1',
+115 silly addNameRange     '1.1.2',
+115 silly addNameRange     '1.1.3',
+115 silly addNameRange     '1.2.0',
+115 silly addNameRange     '1.2.1',
+115 silly addNameRange     '1.3.0',
+115 silly addNameRange     '1.3.1',
+115 silly addNameRange     '1.4.0',
+115 silly addNameRange     '1.4.1',
+115 silly addNameRange     '1.4.2',
+115 silly addNameRange     '1.4.3',
+115 silly addNameRange     '1.4.4',
+115 silly addNameRange     '1.4.5',
+115 silly addNameRange     '1.4.6',
+115 silly addNameRange     '1.5.0',
+115 silly addNameRange     '1.5.1',
+115 silly addNameRange     '1.6.0' ] ]
+116 silly addNamed harmony-reflect@1.6.0
+117 verbose addNamed "1.6.0" is a plain semver version for harmony-reflect
+118 silly mapToRegistry name harmony-reflect
+119 silly mapToRegistry using default registry
+120 silly mapToRegistry registry https://registry.npmjs.org/
+121 silly mapToRegistry data Result {
+121 silly mapToRegistry   raw: 'harmony-reflect',
+121 silly mapToRegistry   scope: null,
+121 silly mapToRegistry   escapedName: 'harmony-reflect',
+121 silly mapToRegistry   name: 'harmony-reflect',
+121 silly mapToRegistry   rawSpec: '',
+121 silly mapToRegistry   spec: 'latest',
+121 silly mapToRegistry   type: 'tag' }
+122 silly mapToRegistry uri https://registry.npmjs.org/harmony-reflect
+123 verbose addRemoteTarball https://registry.npmjs.org/harmony-reflect/-/harmony-reflect-1.6.0.tgz not in flight; adding
+124 verbose addRemoteTarball [ 'https://registry.npmjs.org/harmony-reflect/-/harmony-reflect-1.6.0.tgz',
+124 verbose addRemoteTarball   '9c28a77386ec225f7b5d370f9861ba09c4eea58f' ]
+125 info retry fetch attempt 1 at 8:51:48 PM
+126 info attempt registry request try #1 at 8:51:48 PM
+127 http fetch GET https://registry.npmjs.org/harmony-reflect/-/harmony-reflect-1.6.0.tgz
+128 http fetch 200 https://registry.npmjs.org/harmony-reflect/-/harmony-reflect-1.6.0.tgz
+129 warn retry will retry, error on last attempt: Error: EBUSY: resource busy or locked, rename 'C:\Users\SUPBRO~1\AppData\Local\Temp\npm-14580-31665e29\registry.npmjs.org\harmony-reflect\-\harmony-reflect-1.6.0.tgz.3178699144' -> 'C:\Users\SUPBRO~1\AppData\Local\Temp\npm-14580-31665e29\registry.npmjs.org\harmony-reflect\-\harmony-reflect-1.6.0.tgz'
+130 verbose stack TypeError: tarball.destroy is not a function
+130 verbose stack     at WriteStreamAtomic.<anonymous> (C:\Program Files\nodejs\node_modules\npm\lib\cache\add-remote-tarball.js:97:15)
+130 verbose stack     at emitOne (events.js:101:20)
+130 verbose stack     at WriteStreamAtomic.emit (events.js:188:7)
+130 verbose stack     at WriteStreamAtomic.emit (C:\Program Files\nodejs\node_modules\npm\node_modules\fs-write-stream-atomic\index.js:60:34)
+130 verbose stack     at C:\Program Files\nodejs\node_modules\npm\node_modules\fs-write-stream-atomic\index.js:89:19
+130 verbose stack     at FSReqWrap.oncomplete (fs.js:123:15)
+131 verbose cwd C:\Users\Sup Bro!\Desktop\ject2nd\projectsenior
+132 error Windows_NT 10.0.16299
+133 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "mongoose-schema-extend"
+134 error node v6.11.4
+135 error npm  v3.10.10
+136 error tarball.destroy is not a function
+137 error If you need help, you may report this error at:
+137 error     <https://github.com/npm/npm/issues>
+138 verbose exit [ 1, true ]

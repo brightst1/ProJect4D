@@ -161,15 +161,15 @@ exports.userConfirmOffer = function(req,res){
                                         offer.response_id = response._id
                                         var newRequest = new requests()
                                         newRequest.Username = user.Username
-                                        newRequest.providername = provider.Username
+                                        newRequest.Providername = response.providername
                                         newRequest.Time = new Date()
-                                        newRequest.latitude = service.latitude
-                                        newRequest.longitude = service.longitude
+                                        //newRequest.latitude = service.latitude
+                                       // newRequest.longitude = service.longitude
                                         newRequest.statusFlag = 1
                                         newRequest.save(function(er){
                                             if(er){
                                                 console.log(er)
-                                                return res.send({err:'ไม่สามารถบันทึกข้อมูลได้'})
+                                                res.send({err:'ไม่สามารถบันทึกข้อมูลได้'})
                                             }else{
                                                 console.log('Save Request')
                                                 offer.save(function(err){
