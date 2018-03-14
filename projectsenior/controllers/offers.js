@@ -55,7 +55,7 @@ exports.UserOfferRequest = function(req,res){
 
 }
 
-exports.providerCheckOffer = function(req,res){
+exports.providerCheckListOffer = function(req,res){
     if(req.body && req.body.token && req.body.providername && req.body.typeservice){
         offers.find({'typeservice':req.body.typeservice,'status':1},function(err,offer){
             if(err){
@@ -87,6 +87,23 @@ exports.providerCheckOffer = function(req,res){
                 })
                 //console.log(offerSend)
                 return res.send(offerSend)
+            }
+        })
+    }else{
+        return res.send({status:'ข้อมูลไม่ครบกรุณากรอกข้อมูล'})
+    }
+}
+
+exports.providerCheckOffer = function(req,res){
+    if(req.body && req.body.token && req.body.providername && req.body.typeservice){
+        offers.findOne({'typeservice':req.body.typeservice,'status':1},function(err,offer){
+            if(err){
+                console.log(err)
+                return res.send({err:'เกิดข้อผิดพลาด'})
+            }else if(!offer){
+                return res.send({status:'ยังไม่รายที่ค้นหาในตอนนี้'})
+            }else{
+                return res.send(offer)
             }
         })
     }else{
@@ -151,7 +168,7 @@ exports.userConfirmOffer = function(req,res){
                             if(offer.response_id){
                                 return res.send({status:'คุณได้ทำการเลือกบริการไปแล้วสำหรับคำขอนี้'})
                             }else{
-                                responses.findOne({'_id':req.body.response_id},function(err,response){
+                                responses.findOne({"_id":ObjectId(req.body.response_id)},function(err,response){
                                     if(err){
                                         console.log(err)
                                         return res.send({err:'เกิดข้อผิดพลาด'})
@@ -160,7 +177,7 @@ exports.userConfirmOffer = function(req,res){
                                     }else{
                                         offer.response_id = response._id
                                         var newRequest = new requests()
-                                        newRequest.Username = user.Username
+                                        newRequest.Username = req.body.Username
                                         newRequest.Providername = response.providername
                                         newRequest.Time = new Date()
                                         //newRequest.latitude = service.latitude

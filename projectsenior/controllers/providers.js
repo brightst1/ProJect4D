@@ -125,7 +125,7 @@ exports.providerLogin = function(req,res){
 }
 
 exports.providerLogout = function(req,res){
-    if(req.body && req.body.Username && req.body.password && req.body.token){
+    if(req.body && req.body.Username && req.body.token){
         providers.findOne({'Username':req.body.Username},function(err,result){
             if(err){
                 console.log(err)
@@ -141,6 +141,7 @@ exports.providerLogout = function(req,res){
                             return res.send({err:'something error'})
                         }
                     })
+                    console.log("provider: "+result.Username+" logged out")
                     return res.send({status:'Logged Out'})
                 }else{
                     return res.send({status:'token does not match.'})
