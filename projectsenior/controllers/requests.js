@@ -100,7 +100,11 @@ exports.userShowService = function(req,res){
                         }else if(!request){
                             return res.send({status:'ยังไม่มีการร้องขอใดๆ'})
                         }else{
-                            return res.send(request)
+                            return res.send({
+                                status:200,
+                                reason:"ok",
+                                result:request
+                            })
                         }
                     })
                 }else{
@@ -130,7 +134,11 @@ exports.providerShowService = function(req,res){
                         }else if(!request){
                             return res.send({status:'ยังไม่มีบริการใดๆ'})
                         }else{
-                            return res.send(request)
+                            return res.send({
+                                status:200,
+                                reason:"ok",
+                                result:request
+                            })
                         }
                     })
                 }else{

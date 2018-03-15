@@ -113,7 +113,11 @@ exports.providerLogin = function(req,res){
                         }
                     })
                     console.log("Provider : "+existProvider.providername+" Logged In")
-                    return res.send({token:existProvider.token})
+                    return res.send({
+                        status:200,
+                        reason:"ok",
+                        result:existProvider.token
+                    })
                 }else{
                     return res.send({err:'รหัสผิดพลาด'})
                 }
@@ -198,7 +202,11 @@ exports.show = function(req,res){
                 owner.email = result.email
                 owner.job = result.job
                 owner.telno = result.telno
-                res.send(owner)
+                return res.send({
+                    status:200,
+                    reason:"ok",
+                    result:owner
+                })
             }
         })
     }else{

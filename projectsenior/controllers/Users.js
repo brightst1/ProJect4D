@@ -102,7 +102,11 @@ exports.userLogin = function(req,res){
                             return res.send({err:'error when saving'})
                         }else{
                             
-                            return res.send({token:existUser.token})
+                            return res.send({
+                                status:200,
+                                reason:"ok",
+                                result:existUser.token
+                            })
                         }
                     })
                     // console.log(req.body);

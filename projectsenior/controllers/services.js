@@ -116,7 +116,11 @@ exports.show = function(req,res){
                     }else if(!service){
                         return res.send({status:'ไม่มีบริการนี้'})
                     }else{
-                        return res.send(service)
+                        return res.send({
+                            status:200,
+                            reason:"ok",
+                            result:service
+                        })
                     }
                 })
             }
@@ -142,7 +146,11 @@ exports.showList = function(req,res){
                     }else if(!service){
                         return res.send({status:'ไม่มีบริการนี้'})
                     }else{
-                        return res.send(service)
+                        return res.send({
+                            status:200,
+                            reason:"ok",
+                            result:service
+                        })
                     }
                 })
             }
@@ -169,7 +177,11 @@ exports.userShowService = function(req,res){
                         }else if(!service){
                             return res.send({status:'ยังไม่มีบริการในกลุ่มนี้'})
                         }else{
-                            return res.send(service)
+                            return res.send({
+                                status:200,
+                                reason:"ok",
+                                result:service
+                            })
                         }
                     })
                 }else{

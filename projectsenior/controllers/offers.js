@@ -41,7 +41,7 @@ exports.UserOfferRequest = function(req,res){
                             return res.send({err:'เกิดข้อผิดพลาด'})
                         }else{
                             console.log({status:'Saved Offer'})
-                            return res.send({status:'ยื่นคำเสนอบริการไปแล้ว'})
+                            return res.send({result:"SAVE"})
                         }
                     })
                 }else{
@@ -61,6 +61,13 @@ exports.providerCheckListOffer = function(req,res){
             if(err){
                 console.log(err)
                 return res.send({err:'เกิดข้อผิดพลาด'})
+                /*
+                    res.status(500).send({
+                        status: 500,
+                        reason:'เกิดข้อผิดพลาด',
+                        result: null
+                });
+                */
             }else if(!offer){
                 return res.send({status:'ยังไม่รายที่ค้นหาในตอนนี้'})
             }else{
@@ -86,7 +93,11 @@ exports.providerCheckListOffer = function(req,res){
                     offerSend.push(objectSend)
                 })
                 //console.log(offerSend)
-                return res.send(offerSend)
+                return res.send({
+                    status:200,
+                    reason:"ok",
+                    result:offerSend
+                })
             }
         })
     }else{
@@ -95,15 +106,30 @@ exports.providerCheckListOffer = function(req,res){
 }
 
 exports.providerCheckOffer = function(req,res){
-    if(req.body && req.body.token && req.body.providername && req.body.typeservice){
-        offers.findOne({'typeservice':req.body.typeservice,'status':1},function(err,offer){
+    if(req.body && req.body.token && req.body.providername && req.body.typeservice && req.body.offerId){
+        providers.findOne({'Username':req.body.providername},function(err,provider){
             if(err){
                 console.log(err)
                 return res.send({err:'เกิดข้อผิดพลาด'})
-            }else if(!offer){
-                return res.send({status:'ยังไม่รายที่ค้นหาในตอนนี้'})
+            }else if(!provider){
+                return res.send({status:'ไม่พบข้อมูล'})
             }else{
-                return res.send(offer)
+                if(provider.token == req.body.token){
+                    offers.findOne({'_id':ObjectId(req.body.offerId)},function(err,offer){
+                        if(err){
+                            console.log(err)
+                            return res.send({err:'เกิดข้อผิดพลาด'})
+                        }else if(!offer){
+                            return res.send({status:'ยังไม่รายที่ค้นหาในตอนนี้'})
+                        }else{
+                            return res.send({
+                                status : 200,
+                                reason : "ok",
+                                result : offer
+                            })
+                        }
+                    })
+                }
             }
         })
     }else{
@@ -136,7 +162,11 @@ exports.providerResponseOffer = function(req,res){
                                 return res.send({err:'เกิดข้อผิดพลาดในการบันทึกข้อมูล'})
                             }else{
                                 console.log("SAVED OFFER FOR PROVIDER")
-                                return res.send({status:'SAVED'})
+                                return res.send({
+                                    status:'200',
+                                    reason:"ok",
+                                    result:"save"
+                                })
                             }
                         })
                     }
@@ -254,7 +284,11 @@ exports.UserListShowOfferFromProvider = function(req,res){
                                 offerSend.push(objectSend)
                             })
                             //console.log(offerSend)
-                            return res.send(offerSend)
+                            return res.send({
+                                status: 200,
+                                reason: "ok",
+                                result: offersend
+                            })
                         }
                     })
                 }else{
@@ -284,7 +318,11 @@ exports.UserShowOfferFromProvider = function(req,res){
                         }else if(!offer){
                             return res.send({status:'ยังไม่มีการร้องขอรับบริการในขณะนี้'})
                         }else{
-                            return res.send(offer)
+                            return res.send({
+                                status:200,
+                                reason:"ok",
+                                result:offer
+                            })
                         }
                     })
                 }else{
@@ -322,7 +360,11 @@ exports.UserShowResponseFromProvider = function(req,res){
                                 }else if(!response || lodash.isEmpty(response)){
                                     return res.send({status:'ไม่พบการตอบรับของผู้ให้บริการ'})
                                 }else{
-                                    return res.send(response)
+                                    return res.send({
+                                        status:200,
+                                        reason:"ok",
+                                        result:response
+                                    })
                                 }
                             })
                         }
