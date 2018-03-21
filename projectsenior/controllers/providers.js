@@ -114,7 +114,7 @@ exports.providerLogin = function(req,res){
                         }
                     })
                     console.log("Provider : "+existProvider.Username+" Logged In")
-                    return res.send({token:existProvider.token})
+                    return res.send({token:existProvider.token,typeservice:existProvider.typeservice})
                 }else{
                     return res.send({err:'รหัสผิดพลาด'})
                 }
