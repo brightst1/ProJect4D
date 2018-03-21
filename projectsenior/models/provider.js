@@ -9,7 +9,7 @@ var provider = mongoose.Schema({
     citizenId : String,
     token     : {type: String, default:""},
     detail    : String,
-    job       : Number, // 1,2,3,4,5,6,7
+    typeservice       : Number, // 1,2,3,4,5,6,7
     Telno     : String
 })
 

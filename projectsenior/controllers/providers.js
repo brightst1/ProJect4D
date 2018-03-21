@@ -76,6 +76,7 @@ exports.registerProvider = function(req,res){
                                 provider.password  = sha512(req.body.password)
                                 provider.citizenId = req.body.citizenId
                                 provider.telno     = req.body.telno
+                                proverder.typeservice = req.body.typeservice
                                 provider.save(function(errrr){
                                     if(errrr){
                                         console.log(errrr)
@@ -112,12 +113,8 @@ exports.providerLogin = function(req,res){
                             return res.send({err:'error when saving'})
                         }
                     })
-                    console.log("Provider : "+existProvider.providername+" Logged In")
-                    return res.send({
-                        status:200,
-                        reason:"ok",
-                        result:existProvider.token
-                    })
+                    console.log("Provider : "+existProvider.Username+" Logged In")
+                    return res.send({token:existProvider.token})
                 }else{
                     return res.send({err:'รหัสผิดพลาด'})
                 }
