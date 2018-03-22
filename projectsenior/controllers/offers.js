@@ -153,20 +153,25 @@ exports.providerResponseOffer = function(req,res){
                     }else if(!provider){
                         return res.send({status:'ข้อมูลของท่านไม่ตรงกัน'})
                     }else{
-                        var newResponse = new responses()
-                        newResponse.offerId = offer._id
-                        newResponse.providername = req.body.providername
-                        newResponse.save(function(err){
+                        responses.findOne({'providername':req.body.providername,'offerId':ObjectId(offer._id)},function(err,response){
                             if(err){
                                 console.log(err)
-                                return res.send({err:'เกิดข้อผิดพลาดในการบันทึกข้อมูล'})
-                            }else{
-                                console.log("SAVED OFFER FOR PROVIDER")
-                                return res.send({
-                                    status:'200',
-                                    reason:"ok",
-                                    result:"save"
+                                return res.send({err:'เกิดข้อผิดพลาด'})
+                            }else if(!response){
+                                var newResponse = new responses()
+                                newResponse.offerId = offer._id
+                                newResponse.providername = req.body.providername
+                                newResponse.save(function(err){
+                                    if(err){
+                                        console.log(err)
+                                        return res.send({err:'เกิดข้อผิดพลาดในการบันทึกข้อมูล'})
+                                    }else{
+                                        console.log("SAVED OFFER FOR PROVIDER")
+                                        return res.send({status:'save'})
+                                    }
                                 })
+                            }else{
+                                return res.send({status:"มีท่านได้ตอบรับไปแล้ว"})
                             }
                         })
                     }
