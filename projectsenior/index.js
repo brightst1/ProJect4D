@@ -63,6 +63,7 @@ router.route("/UserListShowOfferFromProvider").post(OfferController.UserListShow
 router.route("/UserShowOfferFromProvider").post(OfferController.UserShowOfferFromProvider)
 router.route("/UserShowResponseFromProvider").post(OfferController.UserShowResponseFromProvider)
 router.route("/providerCheckOffer").post(OfferController.providerCheckOffer)
+router.route("/userShowListResponse").post(OfferController.UserShowListResponse)
 /*
 router.route("/").post(OfferController)
 router.route("/").post(OfferController)
