@@ -252,7 +252,7 @@ exports.userConfirmOffer = function(req,res){
 }
 
 exports.UserListShowOfferFromProvider = function(req,res){
-    if(req.body && req.body.Username && req.body.token && req.body.typeservice){
+    if(req.body && req.body.Username && req.body.token){
         users.findOne({'Username':req.body.Username},function(err,user){
             if(err){
                 console.log(err)
@@ -261,7 +261,7 @@ exports.UserListShowOfferFromProvider = function(req,res){
                 return res.send({status:'ชื่อผู้ใช้ไม่มีในระบบ'})
             }else{
                 if(user.token == req.body.token){
-                    offers.find({'Username':req.body.Username,'typeservice':req.body.typeservice},function(err,offer){
+                    offers.find({'Username':req.body.Username},function(err,offer){
                         if(err){
                             console.log(err)
                             return res.send({err:'เกิดข้อผิดพลาด'})
