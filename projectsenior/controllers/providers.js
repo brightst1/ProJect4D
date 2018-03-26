@@ -199,11 +199,8 @@ exports.show = function(req,res){
                 owner.email = result.email
                 owner.typeservice = result.typeservice
                 owner.telno = result.telno
-                return res.send({
-                    status:200,
-                    reason:"ok",
-                    result:owner
-                })
+                owner.detail = result.detail
+                return res.send(owner)
             }
         })
     }else{

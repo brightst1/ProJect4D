@@ -161,6 +161,7 @@ exports.providerResponseOffer = function(req,res){
                                 var newResponse = new responses()
                                 newResponse.offerId = offer._id
                                 newResponse.providername = req.body.providername
+                                newResponse.Username = offer.Username
                                 newResponse.save(function(err){
                                     if(err){
                                         console.log(err)
@@ -171,7 +172,7 @@ exports.providerResponseOffer = function(req,res){
                                     }
                                 })
                             }else{
-                                return res.send({status:"มีท่านได้ตอบรับไปแล้ว"})
+                                return res.send({status:"ท่านได้ตอบรับไปแล้ว"})
                             }
                         })
                     }
@@ -398,7 +399,7 @@ exports.UserShowListResponse = function(req,res){
                         }else if(!offer){
 
                         }else{
-                            responses.find({'offerId':offer._id},function(err,response){
+                            responses.find({'Username':offer.Username},function(err,response){
                                 if(err){
                                     console.log(err)
                                     return res.send({err:'เกิดข้อผิดพลาด'})
