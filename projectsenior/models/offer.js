@@ -17,8 +17,8 @@ var offer = mongoose.Schema({
     */
     Username : String,
     //amount : String,
-    status : Number //1 waiting , 2match
-    //-response_id : {type: Schema.Types.ObjectId, ref:'response'} //ของprovider 
+    status : Number, //1 waiting , 2match
+    response_id : {type: Schema.Types.ObjectId, ref:'response'} //ของprovider 
 })
 
 module.exports = mongoose.model("offer",offer)

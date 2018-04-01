@@ -4,9 +4,9 @@ var Schema = mongoose.Schema
 var ObjectId = mongoose.Types.ObjectId
 
 var request = mongoose.Schema({
-    Username : {type: Schema.Types.ObjectId, ref:'user'},
-    Providername : {type: Schema.Types.ObjectId, ref:'provider'},
-    Service_id : {type : Schema.Types.ObjectId , ref : 'service'},
+    Username : String,
+    Providername : String,
+    offerId : {type : Schema.Types.ObjectId , ref : 'offer'},
     latitude : {type: Schema.Types.Double,default:0.01},
     longitude : {type: Schema.Types.Double,default:0.01},
     Time : Date,

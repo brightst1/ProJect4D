@@ -75,8 +75,9 @@ exports.registerProvider = function(req,res){
                                 provider.email     = req.body.email
                                 provider.password  = sha512(req.body.password)
                                 provider.citizenId = req.body.citizenId
-                                provider.telno     = req.body.telno
+                                provider.Telno     = req.body.telno
                                 provider.typeservice = req.body.typeservice
+                                provider.detail = req.body.detail
                                 provider.save(function(errrr){
                                     if(errrr){
                                         console.log(errrr)
@@ -198,7 +199,7 @@ exports.show = function(req,res){
                 owner.citizenId = result.citizenId
                 owner.email = result.email
                 owner.typeservice = result.typeservice
-                owner.telno = result.telno
+                owner.Telno = result.telno
                 owner.detail = result.detail
                 return res.send(owner)
             }

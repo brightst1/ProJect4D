@@ -185,70 +185,63 @@ exports.providerResponseOffer = function(req,res){
 }
 
 exports.userConfirmOffer = function(req,res){
-    if(req.body && req.body.Username && req.body.token && req.body.offerId && req.body.response_id){
+    if(req.body && req.body.Username && req.body.token && req.body.offerId && req.body.latitude && req.body.longitude){
         users.findOne({'Username':req.body.Username},function(err,user){
             if(err){
                 console.log(err)
-                return res.send({err:'เกิดข้อผิดพลาด'})
             }else if(!user){
-                return res.send({status:'ไม่พบชื่อผู้ใช้นี้'})
+                console.log('Have No User')
             }else{
                 if(user.token == req.body.token){
-                    offers.findOne({"_id":ObjectId(req.body.offerId)},function(err,offer){
+                     offers.findOne({'_id':ObjectId(req.body.offerId)},function(err,offer){
                         if(err){
                             console.log(err)
-                            return res.send({err:'เกิดข้อผิดพลาด'})
+                            return res.send({err:"เกิดข้อผิดพลาด"})
                         }else if(!offer){
-                            return res.send({status:'ไม่พบข้อเสนอนี้'})
+                            return res.send({status:'ไม่พบการร้องขอ'})
                         }else{
-                            if(offer.response_id){
-                                return res.send({status:'คุณได้ทำการเลือกบริการไปแล้วสำหรับคำขอนี้'})
-                            }else{
-                                responses.findOne({"_id":ObjectId(req.body.response_id)},function(err,response){
-                                    if(err){
-                                        console.log(err)
-                                        return res.send({err:'เกิดข้อผิดพลาด'})
-                                    }else if(!response){
-                                        return res.send({status:'ไม่พบคำร้องขอบริการ'})
+                            responses.findOne({'offerId':ObjectId(req.body.offerId),'Username':req.body.Username},function(err,response){
+                                if(err){
+                                    console.log(err)
+                                    return res.send({err:'เกิดข้อผิดพลาด'})
+                                }else if(!response){
+                                    return res.send('ไม่พบการตอบรับของผู้ให้บริการ')
+                                }else{
+                                    if(offer.response_id){
+                                        return res.send({status:'ท่าได้ผูกข้อเสนอกับผู้ให้บริการอื่นแล้ว'})
                                     }else{
                                         offer.response_id = response._id
                                         var newRequest = new requests()
                                         newRequest.Username = req.body.Username
                                         newRequest.Providername = response.providername
+                                        newRequest.offerId = offer._id
                                         newRequest.Time = new Date()
-                                        //newRequest.latitude = service.latitude
-                                       // newRequest.longitude = service.longitude
+                                        newRequest.latitude = req.body.latitude
+                                        newRequest.longitude = req.body.longitude
                                         newRequest.statusFlag = 1
-                                        newRequest.save(function(er){
-                                            if(er){
-                                                console.log(er)
-                                                res.send({err:'ไม่สามารถบันทึกข้อมูลได้'})
+                                        newRequest.save(function(err){
+                                            if(err){
+                                                console.log(err)
                                             }else{
-                                                console.log('Save Request')
                                                 offer.save(function(err){
                                                     if(err){
                                                         console.log(err)
-                                                        return res.send({err:'เกิดข้อผิดพลาด'})
                                                     }else{
-                                                        console.log('save')
-                                                        return res.send({status:'save'})
+                                                        return res.send({status:'save request'})
                                                     }
                                                 })
-                                                
                                             }
                                         })
                                     }
-                                })
-                            }
+                                }
+                            })
                         }
-                    })
+                     })
                 }else{
-                    return res.send({status:'กรุณาเข้าสู่ระบบ'})
+                    return res.send({status:'ไม่สามารถดำเนินการได้'})
                 }
             }
         })
-    }else{
-        return res.send({status:'กรุณากรอกข้อมูล'})
     }
 }
 
