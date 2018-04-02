@@ -52,8 +52,8 @@ router.route("/providerChangeStatus").post(ServiceController.providerChangeStatu
 router.route("/userRating").post(ServiceController.userRating)
 //--------------------------Request--------------------------------
 router.route("/userConfirmService").post(RequestController.userConfirmService)
-router.route("/userShowService").post(RequestController.userShowService)
-router.route("/providerShowService").post(RequestController.providerShowService)
+router.route("/userShowRequest").post(RequestController.userShowRequest)
+router.route("/providerShowRequest").post(RequestController.providerShowRequest)
 //---------------------------Offer-----------------------------------
 router.route("/userOfferRequest").post(OfferController.UserOfferRequest)
 router.route("/providerCheckListOffer").post(OfferController.providerCheckListOffer)

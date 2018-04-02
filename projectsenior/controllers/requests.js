@@ -117,7 +117,7 @@ exports.userShowRequest = function(req,res){
     }
 }
 
-exports.providerShowService = function(req,res){
+exports.providerShowRequest = function(req,res){
     if(req.body.providername && req.body.token && req.body){
         providers.findOne({'Username':req.body.providername},function(err,provider){
             if(err){
