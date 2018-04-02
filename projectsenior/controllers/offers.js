@@ -219,6 +219,7 @@ exports.userConfirmOffer = function(req,res){
                                         newRequest.latitude = req.body.latitude
                                         newRequest.longitude = req.body.longitude
                                         newRequest.statusFlag = 1
+                                        newRequest.typeservice = offer.typeservice
                                         newRequest.save(function(err){
                                             if(err){
                                                 console.log(err)

@@ -83,32 +83,32 @@ exports.userConfirmService = function(req,res){
     }
 }
 
-exports.userShowService = function(req,res){
-    if(req.body && req.body.Username && req.body.token){
+exports.userShowRequest = function(req,res){
+    if(req.body && req.body.Username && req.body.token ){
         users.findOne({'Username':req.body.Username},function(err,user){
             if(err){
                 console.log(err)
                 return res.send({err:'เกิดข้อผิดพลาด'})
             }else if(!user){
-                return res.send({status:'ไม่มีชื่อผู้ใช้นี้'})
+                return res.send({status:'ไม่พบชื่อผู้ใช้'})
             }else{
                 if(user.token == req.body.token){
-                    requests.find({'Username':user.Username},function(error,request){
-                        if(error){
-                            console.log(error)
+                    requests.find({'Username':req.body.Username},function(err,request){
+                        if(err){
+                            console.log(err)
                             return res.send({err:'เกิดข้อผิดพลาด'})
                         }else if(!request){
-                            return res.send({status:'ยังไม่มีการร้องขอใดๆ'})
+                            return res.send({status:'ยังไม่มีการร้องขอในตอนนี้'})
                         }else{
                             return res.send({
                                 status:200,
-                                reason:"ok",
+                                reason:'ok',
                                 result:request
                             })
                         }
                     })
                 }else{
-                    return res.send({status:'กรุณาเข้าสู่ระบบอีกครั้ง'})
+                    return res.send({status:'ท่านไม่สามารถทำการได้'})
                 }
             }
         })
@@ -118,35 +118,31 @@ exports.userShowService = function(req,res){
 }
 
 exports.providerShowService = function(req,res){
-    if(req.body && req.body.providername && req.body.token){
+    if(req.body.providername && req.body.token && req.body){
         providers.findOne({'Username':req.body.providername},function(err,provider){
             if(err){
                 console.log(err)
                 return res.send({err:'เกิดข้อผิดพลาด'})
             }else if(!provider){
-                return res.send({status:'ไม่มีผู้ให้บริการนี้'})
+                return res.send({status:'ไม่พบผู้ให้บริการนี้'})
             }else{
-                if(provider.token == req.body.token){
-                    requests.find({'Providername':req.body.providername},function(error,request){
-                        if(error){
-                            console.log(error)
-                            return res.send({err:'เกิดข้อผิดพลาด'})
-                        }else if(!request){
-                            return res.send({status:'ยังไม่มีบริการใดๆ'})
-                        }else{
-                            return res.send({
-                                status:200,
-                                reason:"ok",
-                                result:request
-                            })
-                        }
-                    })
-                }else{
-                    return res.send({status:'กรุณาเข้าสู่ระบบ'})
-                }
+                requests.find({'Providername':req.body.providername},function(err,request){
+                    if(err){
+                        console.log(err)
+                        return res.send({err:'เกิดข้อผิดพลาด'})
+                    }else if(!request){
+                        return res.send({status:'ยังไม่มีการร้องขอในตอนนี้'})
+                    }else{
+                        return res.send({
+                            status:200,
+                            reason:'ok',
+                            result:request
+                        })
+                    }
+                })
             }
         })
     }else{
-        return res.send({status:'กรุณากรอกข้อมูล'})
+        return res.send({status:"กรุณากรอกข้อมูล"})
     }
 }

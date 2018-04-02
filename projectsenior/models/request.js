@@ -11,6 +11,7 @@ var request = mongoose.Schema({
     longitude : {type: Schema.Types.Double,default:0.01},
     Time : Date,
     statusFlag : Number, //1,2,3,4,5
+    typeservice : Number
 })
 
 module.exports = mongoose.model("request",request)
