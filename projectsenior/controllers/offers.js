@@ -162,6 +162,7 @@ exports.providerResponseOffer = function(req,res){
                                 newResponse.offerId = offer._id
                                 newResponse.providername = req.body.providername
                                 newResponse.Username = offer.Username
+                                newResponse.typeservice = offer.typeservice
                                 newResponse.save(function(err){
                                     if(err){
                                         console.log(err)
