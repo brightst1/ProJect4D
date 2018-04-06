@@ -211,7 +211,7 @@ exports.show = function(req,res){
 }
 
 exports.showUser = function(req,res){
-    if(req.body && req.body.Username && req.body.token && req.body.Providername){
+    if(req.body && req.body.Username && req.body.token && req.body.providername){
         providers.findOne({'Username':req.body.Providername},function(err,provider){
             if(err){
                 console.log(err)
