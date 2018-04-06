@@ -122,7 +122,16 @@ exports.providerCheckOffer = function(req,res){
                         }else if(!offer){
                             return res.send({status:'ยังไม่รายที่ค้นหาในตอนนี้'})
                         }else{
-                            return res.send(offer)
+                            var newObject = {}
+                            newObject._id = offer._id
+                            newObject.Username = offer.Username
+                            newObject.status = offer.status
+                            newObject.typeservice = offer.typeservice
+                            newObject.response_id = offer.response_id
+                            for(var a in offer.detail){
+                                newObject[a] = offer.detail[a]
+                            }
+                            return res.send(newObject)
                         }
                     })
                 }

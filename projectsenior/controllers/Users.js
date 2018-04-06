@@ -263,7 +263,7 @@ exports.show = function(req,res){
                 return res.send({status:'ไม่มีชื่อผู้ใช้นี้'})
             }else{
                 if(req.body.token == user.token){
-                    var sendObject
+                    var sendObject = {}
                     sendObject.Username = user.Username
                     sendObject.email = user.email
                     sendObject.name = user.name
