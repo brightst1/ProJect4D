@@ -268,6 +268,7 @@ exports.show = function(req,res){
                     sendObject.email = user.email
                     sendObject.name = user.name
                     sendObject.lastname = user.lastname
+                    sendObject.Telno = user.Telno
                     return res.send(sendObject)
                 }
             }
