@@ -37,6 +37,7 @@ router.route("/testjwt").post(UserController.testjwt)
 router.route("/userLogout").post(UserController.userLogout)
 router.route("/Tokentest").post(UserController.Tokentest)
 router.route("/senddata").post(UserController.sendData)
+router.route("/userShow").post(UserController.show)
 //-------------------------Provider-----------------------------
 router.route("/registerProvider").post(ProviderController.registerProvider)
 router.route("/loginProvider").post(ProviderController.providerLogin)
