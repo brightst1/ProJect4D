@@ -43,6 +43,7 @@ router.route("/registerProvider").post(ProviderController.registerProvider)
 router.route("/loginProvider").post(ProviderController.providerLogin)
 router.route("/logoutProvider").post(ProviderController.providerLogout)
 router.route("/showProvider").post(ProviderController.show)
+router.route("/providerShowUser").post(ProviderController.showUser)
 //------------------------Service-------------------------------
 router.route("/showProviderService").post(ServiceController.show)
 router.route("/showListProviceService").post(ServiceController.showList)

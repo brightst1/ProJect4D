@@ -1,4 +1,5 @@
 var mongoose = require("mongoose")
+var users = require("../models/user.js")
 var providers = require("../models/provider.js")
 var services = require("../models/service.js")
 var express = require('express')
@@ -209,3 +210,36 @@ exports.show = function(req,res){
     }
 }
 
+exports.showUser = function(req,res){
+    if(req.body && req.body.Username && req.body.token && req.body.Providername){
+        providers.findOne({'Username':req.body.Providername},function(err,provider){
+            if(err){
+                console.log(err)
+                return res.send({err:'เกิดข้อผิดพลาด'})
+            }else if(!provider){
+                return res.send({status:'ไม่มีชื่อผู้ให้บริการ'})
+            }else{
+                if(provider.token == req.body.token){
+                    users.findOne({'Username':req.body.Username},function(err,user){
+                        if(err){
+                            console.log(err)
+                            return res.send({err:'เกิดข้อผิดพลาด'})
+                        }else if(!user){
+                            return res.send({status:'ไม่มีชื่อผู้ใช้นี้'})
+                        }else{
+                            var sendObject = {}
+                            sendObject.Username = user.Username
+                            sendObject.email = user.email
+                            sendObject.name = user.name
+                            sendObject.lastname = user.lastname
+                            sendObject.Telno = user.Telno
+                            return res.send(sendObject)
+                        }
+                    })
+                }else{
+                    return res.send({status:"กรุณาเข้าสู่ระบบ"})
+                }
+            }
+        })
+    }
+}

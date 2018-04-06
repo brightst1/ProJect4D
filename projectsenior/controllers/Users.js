@@ -270,6 +270,8 @@ exports.show = function(req,res){
                     sendObject.lastname = user.lastname
                     sendObject.Telno = user.Telno
                     return res.send(sendObject)
+                }else{
+                    return res.send({status:'กรุณาเข้าสู่ระบบ'})
                 }
             }
         })
