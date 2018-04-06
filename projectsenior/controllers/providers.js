@@ -199,7 +199,7 @@ exports.show = function(req,res){
                 owner.citizenId = result.citizenId
                 owner.email = result.email
                 owner.typeservice = result.typeservice
-                owner.Telno = result.telno
+                owner.Telno = result.Telno
                 owner.detail = result.detail
                 return res.send(owner)
             }
