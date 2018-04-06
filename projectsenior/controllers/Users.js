@@ -253,3 +253,30 @@ exports.sendData = function(req,res){
     }
 }
 
+exports.show = function(req,res){
+    if(req.body && req.body.Username && req.body.token){
+        users.findOne({'Username':req.body.Username},function(err,user){
+            if(err){
+                console.log(err)
+                return res.send({err:'เกิดข้อผิดพลาด'})
+            }else if(!user){
+                return res.send({status:'ไม่มีชื่อผู้ใช้นี้'})
+            }else{
+                if(req.body.token == user.token){
+                    var sendObject
+                    sendObject.Username = user.Username
+                    sendObject.email = user.email
+                    sendObject.name = user.name
+                    sendObject.lastname = user.lastname
+                    return res.send({
+                        status: 200,
+                        reason : 'ok',
+                        result:sendObject
+                    })
+                }
+            }
+        })
+    }else{
+        return res.send({status:'กรุณากรอกข้อมูล'})
+    }
+}
