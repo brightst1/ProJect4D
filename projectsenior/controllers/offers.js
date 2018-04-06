@@ -122,11 +122,7 @@ exports.providerCheckOffer = function(req,res){
                         }else if(!offer){
                             return res.send({status:'ยังไม่รายที่ค้นหาในตอนนี้'})
                         }else{
-                            return res.send({
-                                status : 200,
-                                reason : "ok",
-                                result : offer
-                            })
+                            return res.send(offer)
                         }
                     })
                 }

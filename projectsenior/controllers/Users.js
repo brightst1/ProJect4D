@@ -268,11 +268,7 @@ exports.show = function(req,res){
                     sendObject.email = user.email
                     sendObject.name = user.name
                     sendObject.lastname = user.lastname
-                    return res.send({
-                        status: 200,
-                        reason : 'ok',
-                        result:sendObject
-                    })
+                    return res.send(sendObject)
                 }
             }
         })
