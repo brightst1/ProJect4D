@@ -36,7 +36,7 @@ var checkID = function(id)
 // }
 
 exports.registerProvider = function(req,res){
-    if(req.body && req.body.Username && req.body.password && req.body.citizenId){
+    if(req.body && req.body.Username && req.body.password && req.body.citizenId && checkID(req.body.citizenId)){
         if(!req.body.name || !req.body.lastname){
             return res.send({err:'กรุณาใส่ชื่อและนามสกุล'})
         }
@@ -94,7 +94,7 @@ exports.registerProvider = function(req,res){
             }
         })
     }else{
-        return res.send({err:'กรุณาใส่ข้อมูล'});
+        return res.send({err:'กรุณาตรวจสอบข้อมูลและรหัสประชาชน'});
     }
 }
 
@@ -212,7 +212,7 @@ exports.show = function(req,res){
 
 exports.showUser = function(req,res){
     if(req.body && req.body.Username && req.body.token && req.body.providername){
-        providers.findOne({'Username':req.body.Providername},function(err,provider){
+        providers.findOne({'Username':req.body.providername},function(err,provider){
             if(err){
                 console.log(err)
                 return res.send({err:'เกิดข้อผิดพลาด'})
@@ -241,5 +241,38 @@ exports.showUser = function(req,res){
                 }
             }
         })
+    }
+}
+
+exports.forgetPassword = function(req,res){
+    if(req.body && req.body.Username && req.body.citizenId && req.body.password && req.body.repassword ){
+        providers.findOne({'Username':req.body.Username},function(err,provider){
+            if(err){
+                console.log(err)
+                return res.send({err:'เกิดข้อผิดพลาด'})
+            }else if(!provider){
+                return res.send({status:'ไม่มีชื่อผู้ใช้นี้'})
+            }else{
+                if(req.body.citizenId == provider.citizenId && (checkID(req.body.citizenId))){
+                    if(req.body.password == req.body.repassword){
+                        provider.password = sha512(req.body.password)
+                        provider.save(function(err){
+                            if(err){
+                                console.log(err)
+                                return res.send({err:'ไม่สามารถบันทึกรหัสได้'})
+                            }else{
+                                return res.send({status:'เปลี่ยนรหัสผ่านแล้ว'})
+                            }
+                        })
+                    }else{
+                        return res.send({status:'รหัสผ่านไม่ตรงกันกรุณากรอกให้ตรงกัน'})
+                    }
+                }else{
+                    return res.send({status:'รหัสประชาชนไม่ตรงกันกรุณากรอกให้ถูกต้อง'})
+                }
+            }
+        })
+    }else{
+        return res.send({status:'กรุณาตรวจสอบข้อมูลและรหัสประชาชน'})
     }
 }

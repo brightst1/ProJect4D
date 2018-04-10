@@ -160,7 +160,7 @@ exports.testjwt = function(req,res){
 // }
 
 exports.registerUser = function(req,res){
-    if(req && req.body && req.body.Username && req.body.password && req.body.citizenId){
+    if(req && req.body && req.body.Username && req.body.password && req.body.citizenId && checkID(req.body.citizenId)){
         if(!req.body.name || !req.body.lastname){
             return res.send({err:'กรุณาใส่ชื่อและนามสกุล'})
         }
@@ -200,7 +200,7 @@ exports.registerUser = function(req,res){
                                 user.email     = req.body.email
                                 user.password  = sha512(req.body.password)
                                 user.citizenId = req.body.citizenId
-                                user.telno    = req.body.telno
+                                user.Telno    = req.body.Telno
                                 user.save(function(errrr){
                                     if(errrr){
                                         console.log(errrr)
@@ -218,7 +218,7 @@ exports.registerUser = function(req,res){
             }
         })
     }else{
-        return res.send({err:'กรุณากรอกข้อมูล'});
+        return res.send({err:'กรุณาตรวจสอบข้อมูลและรหัสประชาชน'});
     }
 }
 
@@ -272,6 +272,39 @@ exports.show = function(req,res){
                     return res.send(sendObject)
                 }else{
                     return res.send({status:'กรุณาเข้าสู่ระบบ'})
+                }
+            }
+        })
+    }else{
+        return res.send({status:'กรุณากรอกข้อมูล'})
+    }
+}
+
+exports.forgetPassword = function(req,res){
+    if(req.body && req.body.Username && req.body.citizenId && req.body.password && req.body.repassword){
+        users.findOne({'Username':req.body.Username},function(err,user){
+            if(err){
+                console.log(err)
+                return res.send({err:'เกิดข้อผิดพลาด'})
+            }else if(!user){
+                return res.send({status:'ไม่มีชื่อผู้ใช้นี้'})
+            }else{
+                if(req.body.citizenId == user.citizenId && checkID(req.body.citizenId)){
+                    if(req.body.password == req.body.repassword){
+                        user.password = sha512(req.body.password)
+                        user.save(function(err){
+                            if(err){
+                                console.log(err)
+                                return res.send({err:'ไม่สามารถบันทึกรหัสได้'})
+                            }else{
+                                return res.send({status:'เปลี่ยนรหัสผ่านแล้ว'})
+                            }
+                        })
+                    }else{
+                        return res.send({status:'รหัสผ่านไม่ตรงกันกรุณากรอกให้ตรงกัน'})
+                    }
+                }else{
+                    return res.send({status:'รหัสประชาชนไม่ตรงกันกรุณากรอกให้ถูกต้อง'})
                 }
             }
         })
