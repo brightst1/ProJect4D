@@ -312,3 +312,36 @@ exports.forgetPassword = function(req,res){
         return res.send({status:'กรุณากรอกข้อมูล'})
     }
 }
+
+exports.edit = function(req,res){
+    if(req.body && req.body.Username && req.body.token){
+        users.findOne({'Username':req.body.Username},function(err,result){
+            if(err){
+                console.log(err)
+                return res.send({err:'เกิดปัญหาบางอย่าง'})
+            }else if(!result){
+                return res.send({status:"ไม่พบผู้ใช้"})
+            }else{
+                if(req.body.token == result.token){
+                    for(var keys in req.body){
+                        if(keys !== "_id" && keys !== "__v" && keys !=="Username" && keys !== "token"){
+                            result[keys] = req.body[keys]
+                        }
+                        result.save(function(err){
+                            if(err){
+                                console.log(err)
+                                return res.send({err:"ไม่สามารถบันทึกข้อมูลได้"})
+                            }else{
+                                return res.send({status:"บันทึกข้อมูลสำเร็จ"})
+                            }
+                        })
+                    }
+                }else{
+                    return res.send({status:'กรุณาเข้าสู่ระบบ'})
+                }
+            }
+        })
+    }else{
+        return res.send({status:"กรุณากรอกข้อมูล"})
+    }
+}

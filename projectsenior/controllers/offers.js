@@ -324,7 +324,7 @@ exports.UserShowOfferFromProvider = function(req,res){
                         }else if(!offer){
                             return res.send({status:'ยังไม่มีการร้องขอรับบริการในขณะนี้'})
                         }else{
-                            return res.send({
+                                return res.send({
                                 status:200,
                                 reason:"ok",
                                 result:offer
@@ -341,6 +341,126 @@ exports.UserShowOfferFromProvider = function(req,res){
     }
 }
 
+exports.UserShowResponseFromProvider = function(req,res){
+    if(req.body && req.body.Username && req.body.token && req.body.offerId){
+        users.findOne({'Username':req.body.Username},function(err,user){
+            if(err){
+                console.log(err)
+                return res.send({err:'เกิดข้อผิดพลาด'})
+            }else if(!user){
+                return res.send({status:'ไม่พบชื่อผู้ใช้นี้'})
+            }else{
+                if(user.token == req.body.token){
+                    offers.findOne({'_id':ObjectId(req.body.offerId),'response_id':{$eq:null}},function(err,offer){
+                        if(err){
+                            console.log(err)
+                            return res.send({err:'เกิดข้อผิดพลาด'})
+                        }else if(!offer){
+                            return res.send({status:'ไม่พบการเสนอข้อมูล'})
+                        }else{
+                            console.log(offer._id)
+                            responses.find({'offerId':ObjectId(offer._id)},function(err,response){
+                                if(err){
+                                    console.log(err)
+                                    return res.send({err:'เกิดข้อผิดพลาด'})
+                                }else if(!response || lodash.isEmpty(response)){
+                                    return res.send({status:'ไม่พบการตอบรับของผู้ให้บริการ'})
+                                }else{
+                                    return res.send({
+                                        status:200,
+                                        reason:"ok",
+                                        result:response
+                                    })
+                                }
+                            })
+                        }
+                    })
+                }
+            }
+        })
+    }else{
+        return res.send({status:'กรุณากรอกข้อมูล'})
+    }
+}
+
+exports.UserShowListResponse = function(req,res){
+    if(req.body && req.body.Username && req.body.token){
+        users.findOne({'Username':req.body.Username},function(err,user){
+            if(err){
+                console.log(err)
+                return res.send({err:'เกิดข้อผิดพลาดของระบบ'})
+            }else if(!user){
+                return res.send({status:'ไม่พบชื่อผู้ใช้นี้'})
+            }else{
+                if(req.body.token == user.token){
+                    offers.findOne({'Username':req.body.Username,'response_id':{$eq:null}},function(err,offer){
+                        if(err){
+                            console.log(err)
+                            return res.send({err:'เกิดข้อผิดพลาด'})
+                        }else if(!offer){
+                            return res.send({status:'ท่านยังไม่ได้ร้องขอบริการหรือท่านอาจได้รับการตอบรับไปแล้ว'})
+                        }else{
+                            responses.find({'Username':offer.Username,statusFlag:{$ne:3}},function(err,response){
+                                if(err){
+                                    console.log(err)
+                                    return res.send({err:'เกิดข้อผิดพลาด'})
+                                }else if(!response){
+                                    return res.send({status:'ยังไม่พบการยอมรับจากผู้บริการในตอนนี้'})
+                                }else{
+                                    return res.send({
+                                        status:200,
+                                        reason:"ok",
+                                        result:response
+                                    })
+                                }
+                            })
+                        }
+                    })
+                }else{
+                    return res.send({status:'ท่านไม่ได้เข้าสู่ระบบ'})
+                }
+            }
+        })
+    }else{
+        return res.send({status:'กรุณากรอกข้อมูล'})
+    }
+}
+
+
+exports.requestDone = function(req,res){
+    if(req.body && req.body.providername && req.body.token && req.body.requestId){
+        providers.findOne({'Username':req.body.providername},function(err,provider){
+            if(err){
+                console.log(err)
+                return res.send({err:'เกิดข้อผิดพลาด'})
+            }else if(!provider){
+                return res.send({status:'ไม่มีชื่อผู้ให้บริการนี้'})
+            }else{
+                requests.findOne({'_id':ObjectId(req.body.requestId)},function(err,request){
+                    if(err){
+                        console.log(err)
+                        return res.send({err:"เกิดข้อผิดพลาด"})
+                    }else if(!request){
+                        return res.send({status:'ไม่พบการร้องขอนี้'})
+                    }else{
+                        request.statusFlag = 3
+                        request.save(function(err){
+                            if(err){
+                                console.log(err)
+                                return res.send({err:'ไม่สามารถบันทึกข้อมูลได้'})
+                            }else{
+                                return res.send({status:'บันทึกสำเร็จ'})
+                            }
+                        })
+                    }
+                })
+            }
+        })
+    }else{
+        return res.send({status:'ข้อมูลไม่ครบถ้วน'})
+    }
+}
+/*
 exports.UserShowResponseFromProvider = function(req,res){
     if(req.body && req.body.Username && req.body.token && req.body.offerId){
         users.findOne({'Username':req.body.Username},function(err,user){
@@ -383,44 +503,4 @@ exports.UserShowResponseFromProvider = function(req,res){
     }
 }
 
-exports.UserShowListResponse = function(req,res){
-    if(req.body && req.body.Username && req.body.token){
-        users.findOne({'Username':req.body.Username},function(err,user){
-            if(err){
-                console.log(err)
-                return res.send({err:'เกิดข้อผิดพลาดของระบบ'})
-            }else if(!user){
-                return res.send({status:'ไม่พบชื่อผู้ใช้นี้'})
-            }else{
-                if(req.body.token == user.token){
-                    offers.findOne({'Username':req.body.Username},function(err,offer){
-                        if(err){
-
-                        }else if(!offer){
-
-                        }else{
-                            responses.find({'Username':offer.Username},function(err,response){
-                                if(err){
-                                    console.log(err)
-                                    return res.send({err:'เกิดข้อผิดพลาด'})
-                                }else if(!response){
-                                    return res.send({status:'ยังไม่พบการยอมรับจากผู้บริการในตอนนี้'})
-                                }else{
-                                    return res.send({
-                                        status:200,
-                                        reason:"ok",
-                                        result:response
-                                    })
-                                }
-                            })
-                        }
-                    })
-                }else{
-                    return res.send({status:'ท่านไม่ได้เข้าสู่ระบบ'})
-                }
-            }
-        })
-    }else{
-        return res.send({status:'กรุณากรอกข้อมูล'})
-    }
-}
+*/ 

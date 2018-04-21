@@ -165,18 +165,22 @@ exports.edit = function(req,res){
             }else if(!result){
                 return res.send({status:"ไม่พบผู้ใช้"})
             }else{
-                for(var keys in req.body){
-                    if(keys !== "_id" && keys !== "__v"){
-                        result[keys] = req.body[keys]
-                    }
-                    result.save(function(err){
-                        if(err){
-                            console.log(err)
-                            return res.send({err:"ไม่สามารถบันทึกข้อมูลได้"})
-                        }else{
-                            return res.send({status:"บันทึกข้อมูลสำเร็จ"})
+                if(req.body.token == result.token){
+                    for(var keys in req.body){
+                        if(keys !== "_id" && keys !== "__v" && keys !=="Username" && keys !== "token"){
+                            result[keys] = req.body[keys]
                         }
-                    })
+                        result.save(function(err){
+                            if(err){
+                                console.log(err)
+                                return res.send({err:"ไม่สามารถบันทึกข้อมูลได้"})
+                            }else{
+                                return res.send({status:"บันทึกข้อมูลสำเร็จ"})
+                            }
+                        })
+                    }
+                }else{
+                    return res.send({status:'กรุณาเข้าสู่ระบบ'})
                 }
             }
         })

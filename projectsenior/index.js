@@ -39,6 +39,7 @@ router.route("/Tokentest").post(UserController.Tokentest)
 router.route("/senddata").post(UserController.sendData)
 router.route("/userShow").post(UserController.show)
 router.route("/userForgetPassword").post(UserController.forgetPassword)
+router.route("/userEdit").post(UserController.edit)
 //-------------------------Provider-----------------------------
 router.route("/registerProvider").post(ProviderController.registerProvider)
 router.route("/loginProvider").post(ProviderController.providerLogin)
@@ -46,6 +47,8 @@ router.route("/logoutProvider").post(ProviderController.providerLogout)
 router.route("/showProvider").post(ProviderController.show)
 router.route("/providerShowUser").post(ProviderController.showUser)
 router.route("/providerForgetPassword").post(ProviderController.forgetPassword)
+router.route("/providerEdit").post(ProviderController.edit)
+
 //------------------------Service-------------------------------
 router.route("/showProviderService").post(ServiceController.show)
 router.route("/showListProviceService").post(ServiceController.showList)
@@ -68,6 +71,7 @@ router.route("/UserShowOfferFromProvider").post(OfferController.UserShowOfferFro
 router.route("/UserShowResponseFromProvider").post(OfferController.UserShowResponseFromProvider)
 router.route("/providerCheckOffer").post(OfferController.providerCheckOffer)
 router.route("/userShowListResponse").post(OfferController.UserShowListResponse)
+router.route("/requestDone").post(OfferController.requestDone)
 /*
 router.route("/").post(OfferController)
 router.route("/").post(OfferController)
