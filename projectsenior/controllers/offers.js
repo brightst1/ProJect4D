@@ -57,7 +57,7 @@ exports.UserOfferRequest = function(req,res){
 
 exports.providerCheckListOffer = function(req,res){
     if(req.body && req.body.token && req.body.providername && req.body.typeservice){
-        offers.find({'typeservice':req.body.typeservice,'status':1},function(err,offer){
+        offers.find({'typeservice':req.body.typeservice,'status':1,'Providername':{$eq:null}},null,{sort:{$natural:-1}},function(err,offer){
             if(err){
                 console.log(err)
                 return res.send({err:'เกิดข้อผิดพลาด'})
@@ -217,6 +217,7 @@ exports.userConfirmOffer = function(req,res){
                                         return res.send({status:'ท่าได้ผูกข้อเสนอกับผู้ให้บริการอื่นแล้ว'})
                                     }else{
                                         offer.response_id = response._id
+                                        offer.Providername = response.providername
                                         var newRequest = new requests()
                                         newRequest.Username = req.body.Username
                                         newRequest.Providername = response.providername
@@ -393,7 +394,7 @@ exports.UserShowListResponse = function(req,res){
                 return res.send({status:'ไม่พบชื่อผู้ใช้นี้'})
             }else{
                 if(req.body.token == user.token){
-                    offers.findOne({'Username':req.body.Username,'response_id':{$eq:null}},function(err,offer){
+                    offers.findOne({'Username':req.body.Username,'response_id':{$eq:null}},null,{sort:{$natural:-1}},function(err,offer){
                         if(err){
                             console.log(err)
                             return res.send({err:'เกิดข้อผิดพลาด'})
@@ -425,7 +426,6 @@ exports.UserShowListResponse = function(req,res){
         return res.send({status:'กรุณากรอกข้อมูล'})
     }
 }
-
 
 exports.requestDone = function(req,res){
     if(req.body && req.body.providername && req.body.token && req.body.requestId){
@@ -460,6 +460,7 @@ exports.requestDone = function(req,res){
         return res.send({status:'ข้อมูลไม่ครบถ้วน'})
     }
 }
+
 /*
 exports.UserShowResponseFromProvider = function(req,res){
     if(req.body && req.body.Username && req.body.token && req.body.offerId){
@@ -502,5 +503,49 @@ exports.UserShowResponseFromProvider = function(req,res){
         return res.send({status:'กรุณากรอกข้อมูล'})
     }
 }
+exports.UserShowListResponse = function(req,res){
+    if(req.body && req.body.Username && req.body.token){
+        users.findOne({'Username':req.body.Username},function(err,user){
+            if(err){
+                console.log(err)
+                return res.send({err:'เกิดข้อผิดพลาดของระบบ'})
+            }else if(!user){
+                return res.send({status:'ไม่พบชื่อผู้ใช้นี้'})
+            }else{
+                if(req.body.token == user.token){
+                    offers.findOne({'Username':req.body.Username,'response_id':{$eq:null}},function(err,offer){
+                        if(err){
+                            console.log(err)
+                            return res.send({err:'เกิดข้อผิดพลาด'})
+                        }else if(!offer){
+                            return res.send({status:'ท่านยังไม่ได้ร้องขอบริการหรือท่านอาจได้รับการตอบรับไปแล้ว'})
+                        }else{
+                            responses.find({'Username':offer.Username,statusFlag:{$ne:3}},function(err,response){
+                                if(err){
+                                    console.log(err)
+                                    return res.send({err:'เกิดข้อผิดพลาด'})
+                                }else if(!response){
+                                    return res.send({status:'ยังไม่พบการยอมรับจากผู้บริการในตอนนี้'})
+                                }else{
+                                    return res.send({
+                                        status:200,
+                                        reason:"ok",
+                                        result:response
+                                    })
+                                }
+                            })
+                        }
+                    })
+                }else{
+                    return res.send({status:'ท่านไม่ได้เข้าสู่ระบบ'})
+                }
+            }
+        })
+    }else{
+        return res.send({status:'กรุณากรอกข้อมูล'})
+    }
+}
+
+
 
 */ 

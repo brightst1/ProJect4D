@@ -93,7 +93,7 @@ exports.userShowRequest = function(req,res){
                 return res.send({status:'ไม่พบชื่อผู้ใช้'})
             }else{
                 if(user.token == req.body.token){
-                    requests.find({'Username':req.body.Username},function(err,request){
+                    requests.find({'Username':req.body.Username},null,{sort:{$natural:-1}},function(err,request){
                         if(err){
                             console.log(err)
                             return res.send({err:'เกิดข้อผิดพลาด'})
@@ -126,7 +126,7 @@ exports.providerShowRequest = function(req,res){
             }else if(!provider){
                 return res.send({status:'ไม่พบผู้ให้บริการนี้'})
             }else{
-                requests.find({'Providername':req.body.providername},function(err,request){
+                requests.find({'Providername':req.body.providername},null,{sort:{$natural:-1}},function(err,request){
                     if(err){
                         console.log(err)
                         return res.send({err:'เกิดข้อผิดพลาด'})
