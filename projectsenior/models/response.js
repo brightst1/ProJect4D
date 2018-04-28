@@ -6,7 +6,8 @@ var response = mongoose.Schema({
     offerId : {type: Schema.Types.ObjectId, ref:'offer'},
     providername : String,
     Username: String,
-    typeservice : Number
+    typeservice : Number,
+    Flag : Number
 })
 
 module.exports = mongoose.model("response",response)
