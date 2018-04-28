@@ -10,7 +10,9 @@ var provider = mongoose.Schema({
     token     : {type: String, default:""},
     detail    : String,
     typeservice       : Number, // 1,2,3,4,5,6,7
-    Telno     : String
+    Telno     : String,
+    rate      : Number,
+    time      : {type:Number , default:0}
 })
 
 module.exports = mongoose.model("provider",provider)

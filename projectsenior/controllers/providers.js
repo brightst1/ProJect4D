@@ -280,3 +280,57 @@ exports.forgetPassword = function(req,res){
         return res.send({status:'กรุณาตรวจสอบข้อมูลและรหัสประชาชน'})
     }
 }
+
+exports.rating = function(req,res){
+    if(req.body && req.body.Username && req.body.token && req.body.providername && req.body.point){
+        users.findOne({'Username':req.body.Username},function(err,user){
+            if(err){
+                console.log(err)
+                return res.send({err:'เกิดข้อผิดพลาด'})
+            }else if(!user){
+                return res.send({status:'กรุณากรอกข้อมูล'})
+            }else{
+                if(user.token == req.body.token){
+                    providers.findOne({'Username':req.body.providername},function(err,provider){
+                        if(err){
+                            console.log(err)
+                            return res.send({err:'เกิดข้อผิดพลาด'})
+                        }else if(!provider){
+                            return res.send({status:'ไม่พบผู้ให้บริการ'})
+                        }else{
+                            if(provider.time == 0){
+                                provider.rate = req.body.point
+                                provider.save(function(err){
+                                    if(err){
+                                        console.log(err)
+                                        return res.send({err:'ไม่สามารถบันทึกได้'})
+                                    }else{
+                                        console.log("saved")
+                                        provider.time += 1
+                                        return res.send({status:'add rating complete'})
+                                    }
+                                })
+                            }else{
+                                provider.rate = (provider.rate+req.body.point)/provider.time
+                                provider.save(function(err){
+                                    if(err){
+                                        console.log(err)
+                                        return res.send({err:'ไม่สามารถบันทึกได้'})
+                                    }else{
+                                        console.log("saved")
+                                        provider.time += 1
+                                        return res.send({status:'add rating complete'})
+                                    }
+                                })
+                            }
+                        }
+                    })
+                }else{
+                    return res.send({status:'กรุณาเข้าสู่ระบบ'})
+                }
+            }
+        })
+    }else{
+        return res.send({status:'กรุณากรอกข้อมูล'})
+    }
+}

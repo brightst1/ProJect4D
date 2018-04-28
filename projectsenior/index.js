@@ -48,7 +48,7 @@ router.route("/showProvider").post(ProviderController.show)
 router.route("/providerShowUser").post(ProviderController.showUser)
 router.route("/providerForgetPassword").post(ProviderController.forgetPassword)
 router.route("/providerEdit").post(ProviderController.edit)
-
+router.route("/rating").post(ProviderController.rating)
 //------------------------Service-------------------------------
 router.route("/showProviderService").post(ServiceController.show)
 router.route("/showListProviceService").post(ServiceController.showList)
