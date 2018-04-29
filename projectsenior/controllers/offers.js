@@ -506,6 +506,44 @@ exports.denied = function(req,res){
     }
 }
 
+exports.providerDenied = function(req,res){
+    if(req.body && req.body.providername && req.body.token && req.body.response_id){
+        providers.findOne({'Username':req.body.providername},function(err,provider){
+            if(err){
+                console.log(err)
+                return res.send({err:'เกิดข้อผิดพลาด'})
+            }else if(!provider){
+                return res.send({status:'ไม่มีชื่อผู้ใช้งาน'})
+            }else{
+                if(req.body.token == provider.token){
+                    responses.findOne({'id':ObjectId(req.body.response_id)},function(err,response){
+                        if(err){
+                            console.log(err)
+                            return res.send({err:'เกิดข้อผิดพลาด'})
+                        }else if(!response){
+                            return res.send({status:'ไม่มีบริการนี้'})
+                        }else{
+                            response.Flag = 3 
+                            response.save(function(err){
+                                if(err){
+                                    console.log(err)
+                                    return res.send({err:'เกิดข้อผิดพลาดในการบันทึกข้อมูล'})
+                                }else{
+                                    return res.send({status:'บันทึกข้อมูลสำเร็จ'})
+                                }
+                            })
+                        }
+                    })
+                }else{
+                    return res.send({status:'กรุณาเข้าสู่ระบบ'})
+                }
+            }
+        })
+    }else{
+        return res.send({status:'กรุณากรอกข้อมูล'})
+    }
+}
+
 //
 /*
 

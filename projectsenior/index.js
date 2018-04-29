@@ -73,6 +73,7 @@ router.route("/providerCheckOffer").post(OfferController.providerCheckOffer)
 router.route("/userShowListResponse").post(OfferController.UserShowListResponse)
 router.route("/requestDone").post(OfferController.requestDone)
 router.route("/denied").post(OfferController.denied)
+router.route("/providerDenied").post(OfferController.providerDenied)
 /*
 router.route("/").post(OfferController)
 router.route("/").post(OfferController)
