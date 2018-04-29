@@ -531,7 +531,7 @@ exports.providerDenied = function(req,res){
                                 }else{
                                     return res.send({status:'บันทึกข้อมูลสำเร็จ'})
                                 }
-                            })
+                            }) 
                         }
                     })
                 }else{

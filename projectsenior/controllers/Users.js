@@ -325,7 +325,9 @@ exports.edit = function(req,res){
                 if(req.body.token == result.token){
                     for(var keys in req.body){
                         if(keys !== "_id" && keys !== "__v" && keys !=="Username" && keys !== "token"){
-                            result[keys] = req.body[keys]
+                            if(req.body[keys] != ""){
+                                result[keys] = req.body[keys]
+                            }
                         }
                     }
                     result.save(function(err){
